@@ -1,0 +1,53 @@
+{
+	"name": "nodewriter",
+	"version": "0.1.0",
+	"main": "dist/cli.js",
+	"engines": {
+		"node": ">=20.15",
+		"pnpm": ">=9.7"
+	},
+	"packageManager": "pnpm@9.7.0",
+	"bin": {
+		"nodewriter": "dist/cli.js"
+	},
+	"author": {
+		"name": "Iván Ovejero",
+		"url": "https://ivov.dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ivov/nodewriter.git"
+	},
+	"files": [
+		"dist/**/*"
+	],
+	"keywords": [
+		"n8n",
+		"OpenAPI"
+	],
+	"scripts": {
+		"benchmark:js": "./scripts/run-perf.sh benchmark js",
+		"benchmark:json": "./scripts/run-perf.sh benchmark json",
+		"build": "tsc -p tsconfig.build.json",
+		"docs": "node ./scripts/inputs-outputs-table.mjs",
+		"profile:js": "./scripts/run-perf.sh profile js",
+		"profile:json": "./scripts/run-perf.sh profile json",
+		"release": "./scripts/release.sh",
+		"samples": "bun scripts/extract-samples.ts && bun scripts/write-samples.ts",
+		"samples:diff": "./scripts/diff-samples.sh"
+	},
+	"dependencies": {
+		"@biomejs/js-api": "^0.7.1",
+		"@biomejs/wasm-nodejs": "^1.9.4",
+		"pluralize": "^8.0.0",
+		"recast": "^0.23.11"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/node": "^22.7.4",
+		"@types/pluralize": "^0.0.33",
+		"lefthook": "^1.11.3",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "^5.8.2"
+	}
+}

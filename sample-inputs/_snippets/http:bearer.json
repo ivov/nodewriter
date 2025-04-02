@@ -1,0 +1,40 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "HttpBearer Snippet API",
+    "description": "Some description",
+    "version": "1.2.1"
+  },
+  "servers": [
+    {
+      "url": "https://snippet.com/api"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Get users",
+        "description": "Get all users",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "MuseumPlaceholderAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "MuseumPlaceholderAuth": []
+    }
+  ]
+}

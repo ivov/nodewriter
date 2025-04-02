@@ -1,0 +1,5000 @@
+{
+  "descriptors": {
+    "name": "Hetzner",
+    "description": "This is the official API documentation for the Public Hetzner Cloud.  ## Introduction  The Hetzner Cloud API operates ov...",
+    "baseUrl": "https://api.hetzner.cloud/v1",
+    "specVersion": "1.0.0",
+    "openApiVersion": "3.0.0",
+    "nodeTypeClassName": "Hetzner",
+    "auth": [],
+    "docsUrl": "https://docs.n8n.io/integrations/creating-nodes/",
+    "resources": [
+      "Action",
+      "Certificate",
+      "Certificate Action",
+      "Datacenter",
+      "Firewall",
+      "Firewall Action",
+      "Floating IP",
+      "Floating IP Action",
+      "Image",
+      "Image Action",
+      "ISO",
+      "Load Balancer Type",
+      "Load Balancer",
+      "Load Balancer Action",
+      "Location",
+      "Network",
+      "Network Action",
+      "Placement Group",
+      "Pricing",
+      "Primary IP",
+      "Primary IP Action",
+      "Server Type",
+      "Server",
+      "Server Action",
+      "SSH Key",
+      "Volume",
+      "Volume Action"
+    ]
+  },
+  "operations": {
+    "getActions": {
+      "displayName": "Get all Actions",
+      "description": "Returns all Action objects. You can `sort` the results by using the sort URI parameter, and filter them with the `status...",
+      "method": "get",
+      "endpoint": "/actions",
+      "tags": [
+        "Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified IDs",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "getActionsId": {
+      "displayName": "Get an Action",
+      "description": "Returns a specific Action object",
+      "method": "get",
+      "endpoint": "/actions/{id}",
+      "tags": [
+        "Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getCertificates": {
+      "displayName": "Get all Certificates",
+      "description": "Returns all Certificate objects",
+      "method": "get",
+      "endpoint": "/certificates",
+      "tags": [
+        "Certificate"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "type",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. The response will only contain Certificates matching the type",
+          "type": "options",
+          "default": "uploaded",
+          "options": [
+            "uploaded",
+            "managed"
+          ]
+        }
+      ]
+    },
+    "postCertificates": {
+      "displayName": "Create a Certificate",
+      "description": "Creates a new Certificate.  The default type **uploaded** allows for uploading your existing `certificate` and `private_...",
+      "method": "post",
+      "endpoint": "/certificates",
+      "tags": [
+        "Certificate"
+      ],
+      "params": [
+        {
+          "name": "certificate",
+          "location": "body",
+          "required": false,
+          "description": "Certificate and chain in PEM format, in order so that each record directly certifies the one preceding. Required for typ...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. -----BEGIN CERTIFICATE-----\n..."
+        },
+        {
+          "name": "domain_names",
+          "location": "body",
+          "required": false,
+          "description": "Domains and subdomains that should be contained in the Certificate issued by *Let's Encrypt*. Required for type `managed...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the Certificate",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my website cert"
+        },
+        {
+          "name": "private_key",
+          "location": "body",
+          "required": false,
+          "description": "Certificate key in PEM format. Required for type `uploaded` Certificates",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. -----BEGIN PRIVATE KEY-----\n..."
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "Choose between uploading a Certificate in PEM format or requesting a managed *Let's Encrypt* Certificate. If omitted def...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. uploaded"
+        }
+      ]
+    },
+    "deleteCertificatesId": {
+      "displayName": "Delete a Certificate",
+      "description": "Deletes a Certificate",
+      "method": "delete",
+      "endpoint": "/certificates/{id}",
+      "tags": [
+        "Certificate"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getCertificatesId": {
+      "displayName": "Get a Certificate",
+      "description": "Gets a specific Certificate object",
+      "method": "get",
+      "endpoint": "/certificates/{id}",
+      "tags": [
+        "Certificate"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putCertificatesId": {
+      "displayName": "Update a Certificate",
+      "description": "Updates the Certificate properties.  Note that when updating labels, the Certificate’s current set of labels will be rep...",
+      "method": "put",
+      "endpoint": "/certificates/{id}",
+      "tags": [
+        "Certificate"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New Certificate name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my website cert"
+        }
+      ]
+    },
+    "getCertificatesIdActions": {
+      "displayName": "Get all Actions for a Certificate",
+      "description": "Returns all Action objects for a Certificate. You can sort the results by using the `sort` URI parameter, and filter the...",
+      "method": "get",
+      "endpoint": "/certificates/{id}/actions",
+      "tags": [
+        "Certificate Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postCertificatesIdActionsRetry": {
+      "displayName": "Retry Issuance or Renewal",
+      "description": "Retry a failed Certificate issuance or renewal.  Only applicable if the type of the Certificate is `managed` and the iss...",
+      "method": "post",
+      "endpoint": "/certificates/{id}/actions/retry",
+      "tags": [
+        "Certificate Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Certificate",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getCertificatesIdActionsActionId": {
+      "displayName": "Get an Action for a Certificate",
+      "description": "Returns a specific Action for a Certificate. Only type `managed` Certificates have Actions",
+      "method": "get",
+      "endpoint": "/certificates/{id}/actions/{action_id}",
+      "tags": [
+        "Certificate Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Certificate",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getDatacenters": {
+      "displayName": "Get all Datacenters",
+      "description": "Returns all Datacenter objects",
+      "method": "get",
+      "endpoint": "/datacenters",
+      "tags": [
+        "Datacenter"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Datacenters by their name. The response will only contain the Datacenter matching the specified na...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getDatacentersId": {
+      "displayName": "Get a Datacenter",
+      "description": "Returns a specific Datacenter object",
+      "method": "get",
+      "endpoint": "/datacenters/{id}",
+      "tags": [
+        "Datacenter"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of Datacenter",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getFirewalls": {
+      "displayName": "Get all Firewalls",
+      "description": "Returns all Firewall objects",
+      "method": "get",
+      "endpoint": "/firewalls",
+      "tags": [
+        "Firewall"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postFirewalls": {
+      "displayName": "Create a Firewall",
+      "description": "Creates a new Firewall.  #### Call specific error codes  | Code                          | Description                  ...",
+      "method": "post",
+      "endpoint": "/firewalls",
+      "tags": [
+        "Firewall"
+      ],
+      "params": [
+        {
+          "name": "apply_to",
+          "location": "body",
+          "required": false,
+          "description": "Resources the Firewall should be applied to after creation",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the Firewall",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Corporate Intranet Protection"
+        },
+        {
+          "name": "rules",
+          "location": "body",
+          "required": false,
+          "description": "Array of rules",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "deleteFirewallsId": {
+      "displayName": "Delete a Firewall",
+      "description": "Deletes a Firewall.  #### Call specific error codes  | Code                 | Description                               ...",
+      "method": "delete",
+      "endpoint": "/firewalls/{id}",
+      "tags": [
+        "Firewall"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getFirewallsId": {
+      "displayName": "Get a Firewall",
+      "description": "Gets a specific Firewall object",
+      "method": "get",
+      "endpoint": "/firewalls/{id}",
+      "tags": [
+        "Firewall"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putFirewallsId": {
+      "displayName": "Update a Firewall",
+      "description": "Updates the Firewall.  Note that when updating labels, the Firewall's current set of labels will be replaced with the la...",
+      "method": "put",
+      "endpoint": "/firewalls/{id}",
+      "tags": [
+        "Firewall"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New Firewall name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. new-name"
+        }
+      ]
+    },
+    "getFirewallsIdActions": {
+      "displayName": "Get all Actions for a Firewall",
+      "description": "Returns all Action objects for a Firewall. You can sort the results by using the `sort` URI parameter, and filter them w...",
+      "method": "get",
+      "endpoint": "/firewalls/{id}/actions",
+      "tags": [
+        "Firewall Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postFirewallsIdActionsApplyToResources": {
+      "displayName": "Apply to Resources",
+      "description": "Applies one Firewall to multiple resources.  Currently servers (public network interface) and label selectors are suppor...",
+      "method": "post",
+      "endpoint": "/firewalls/{id}/actions/apply_to_resources",
+      "tags": [
+        "Firewall Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Firewall",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "apply_to",
+          "location": "body",
+          "required": true,
+          "description": "Resources the Firewall should be applied to",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "postFirewallsIdActionsRemoveFromResources": {
+      "displayName": "Remove from Resources",
+      "description": "Removes one Firewall from multiple resources.  Currently only Servers (and their public network interfaces) are supporte...",
+      "method": "post",
+      "endpoint": "/firewalls/{id}/actions/remove_from_resources",
+      "tags": [
+        "Firewall Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Firewall",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "remove_from",
+          "location": "body",
+          "required": true,
+          "description": "Resources the Firewall should be removed from",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "postFirewallsIdActionsSetRules": {
+      "displayName": "Set Rules",
+      "description": "Sets the rules of a Firewall.  All existing rules will be overwritten. Pass an empty `rules` array to remove all rules. ...",
+      "method": "post",
+      "endpoint": "/firewalls/{id}/actions/set_rules",
+      "tags": [
+        "Firewall Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Firewall",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "rules",
+          "location": "body",
+          "required": true,
+          "description": "Array of rules",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "getFirewallsIdActionsActionId": {
+      "displayName": "Get an Action for a Firewall",
+      "description": "Returns a specific Action for a Firewall",
+      "method": "get",
+      "endpoint": "/firewalls/{id}/actions/{action_id}",
+      "tags": [
+        "Firewall Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Firewall",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getFloatingIps": {
+      "displayName": "Get all Floating IPs",
+      "description": "Returns all Floating IP objects",
+      "method": "get",
+      "endpoint": "/floating_ips",
+      "tags": [
+        "Floating IP"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Floating IPs by their name. The response will only contain the Floating IP matching the specified ...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Floating IPs by labels. The response will only contain Floating IPs matching the label selector",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. Choices id id:asc id:desc created created:asc created:desc",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        }
+      ]
+    },
+    "postFloatingIps": {
+      "displayName": "Create a Floating IP",
+      "description": "Creates a new Floating IP assigned to a Server. If you want to create a Floating IP that is not bound to a Server, you n...",
+      "method": "post",
+      "endpoint": "/floating_ips",
+      "tags": [
+        "Floating IP"
+      ],
+      "params": [
+        {
+          "name": "description",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Web Frontend"
+        },
+        {
+          "name": "home_location",
+          "location": "body",
+          "required": false,
+          "description": "Home Location (routing is optimized for that Location). Only optional if Server argument is passed",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. fsn1"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Web Frontend"
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": false,
+          "description": "Server to assign the Floating IP to",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Floating IP type",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteFloatingIpsId": {
+      "displayName": "Delete a Floating IP",
+      "description": "Deletes a Floating IP. If it is currently assigned to a Server it will automatically get unassigned",
+      "method": "delete",
+      "endpoint": "/floating_ips/{id}",
+      "tags": [
+        "Floating IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getFloatingIpsId": {
+      "displayName": "Get a Floating IP",
+      "description": "Returns a specific Floating IP object",
+      "method": "get",
+      "endpoint": "/floating_ips/{id}",
+      "tags": [
+        "Floating IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putFloatingIpsId": {
+      "displayName": "Update a Floating IP",
+      "description": "Updates the description or labels of a Floating IP. Also note that when updating labels, the Floating IP’s current set o...",
+      "method": "put",
+      "endpoint": "/floating_ips/{id}",
+      "tags": [
+        "Floating IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "description",
+          "location": "body",
+          "required": false,
+          "description": "New Description to set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Web Frontend"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New unique name to set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Web Frontend"
+        }
+      ]
+    },
+    "getFloatingIpsIdActions": {
+      "displayName": "Get all Actions for a Floating IP",
+      "description": "Returns all Action objects for a Floating IP. You can sort the results by using the `sort` URI parameter, and filter the...",
+      "method": "get",
+      "endpoint": "/floating_ips/{id}/actions",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postFloatingIpsIdActionsAssign": {
+      "displayName": "Assign a Floating IP to a Server",
+      "description": "Assigns a Floating IP to a Server",
+      "method": "post",
+      "endpoint": "/floating_ips/{id}/actions/assign",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": true,
+          "description": "ID of the Server the Floating IP shall be assigned to",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postFloatingIpsIdActionsChangeDnsPtr": {
+      "displayName": "Change reverse DNS entry for a Floating IP",
+      "description": "Changes the hostname that will appear when getting the hostname belonging to this Floating IP",
+      "method": "post",
+      "endpoint": "/floating_ips/{id}/actions/change_dns_ptr",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "dns_ptr",
+          "location": "body",
+          "required": true,
+          "description": "Hostname to set as a reverse DNS PTR entry, will reset to original default value if `null`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. server02.example.com"
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": true,
+          "description": "IP address for which to set the reverse DNS entry",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1.2.3.4"
+        }
+      ]
+    },
+    "postFloatingIpsIdActionsChangeProtection": {
+      "displayName": "Change Floating IP Protection",
+      "description": "Changes the protection configuration of the Floating IP",
+      "method": "post",
+      "endpoint": "/floating_ips/{id}/actions/change_protection",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Floating IP from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postFloatingIpsIdActionsUnassign": {
+      "displayName": "Unassign a Floating IP",
+      "description": "Unassigns a Floating IP, resulting in it being unreachable. You may assign it to a Server again at a later time",
+      "method": "post",
+      "endpoint": "/floating_ips/{id}/actions/unassign",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getFloatingIpsIdActionsActionId": {
+      "displayName": "Get an Action for a Floating IP",
+      "description": "Returns a specific Action object for a Floating IP",
+      "method": "get",
+      "endpoint": "/floating_ips/{id}/actions/{action_id}",
+      "tags": [
+        "Floating IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Floating IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getImages": {
+      "displayName": "Get all Images",
+      "description": "Returns all Image objects. You can select specific Image types only and sort the results by using URI parameters",
+      "method": "get",
+      "endpoint": "/images",
+      "tags": [
+        "Image"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "type",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "system",
+          "options": [
+            "system",
+            "snapshot",
+            "backup",
+            "app"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. The response will only contain Images matching the status",
+          "type": "options",
+          "default": "available",
+          "options": [
+            "available",
+            "creating"
+          ]
+        },
+        {
+          "name": "bound_to",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. Server ID linked to the Image. Only available for Images of type `backup`",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "include_deprecated",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteImagesId": {
+      "displayName": "Delete an Image",
+      "description": "Deletes an Image. Only Images of type `snapshot` and `backup` can be deleted",
+      "method": "delete",
+      "endpoint": "/images/{id}",
+      "tags": [
+        "Image"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getImagesId": {
+      "displayName": "Get an Image",
+      "description": "Returns a specific Image object",
+      "method": "get",
+      "endpoint": "/images/{id}",
+      "tags": [
+        "Image"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putImagesId": {
+      "displayName": "Update an Image",
+      "description": "Updates the Image. You may change the description, convert a Backup Image to a Snapshot Image or change the Image labels...",
+      "method": "put",
+      "endpoint": "/images/{id}",
+      "tags": [
+        "Image"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "description",
+          "location": "body",
+          "required": false,
+          "description": "New description of Image",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. My new Image description"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "Destination Image type to convert to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getImagesIdActions": {
+      "displayName": "Get all Actions for an Image",
+      "description": "Returns all Action objects for an Image. You can sort the results by using the `sort` URI parameter, and filter them wit...",
+      "method": "get",
+      "endpoint": "/images/{id}/actions",
+      "tags": [
+        "Image Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postImagesIdActionsChangeProtection": {
+      "displayName": "Change Image Protection",
+      "description": "Changes the protection configuration of the Image. Can only be used on snapshots",
+      "method": "post",
+      "endpoint": "/images/{id}/actions/change_protection",
+      "tags": [
+        "Image Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the snapshot from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "getImagesIdActionsActionId": {
+      "displayName": "Get an Action for an Image",
+      "description": "Returns a specific Action for an Image",
+      "method": "get",
+      "endpoint": "/images/{id}/actions/{action_id}",
+      "tags": [
+        "Image Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Image",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getIsos": {
+      "displayName": "Get all ISOs",
+      "description": "Returns all available ISO objects",
+      "method": "get",
+      "endpoint": "/isos",
+      "tags": [
+        "ISO"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter ISOs by their name. The response will only contain the ISO matching the specified name",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getIsosId": {
+      "displayName": "Get an ISO",
+      "description": "Returns a specific ISO object",
+      "method": "get",
+      "endpoint": "/isos/{id}",
+      "tags": [
+        "ISO"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the ISO",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getLoadBalancerTypes": {
+      "displayName": "Get all Load Balancer Types",
+      "description": "Gets all Load Balancer type objects",
+      "method": "get",
+      "endpoint": "/load_balancer_types",
+      "tags": [
+        "Load Balancer Type"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Load Balancer types by their name. The response will only contain the Load Balancer type matching ...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getLoadBalancerTypesId": {
+      "displayName": "Get a Load Balancer Type",
+      "description": "Gets a specific Load Balancer type object",
+      "method": "get",
+      "endpoint": "/load_balancer_types/{id}",
+      "tags": [
+        "Load Balancer Type"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of Load Balancer type",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getLoadBalancers": {
+      "displayName": "Get all Load Balancers",
+      "description": "Gets all existing Load Balancers that you have available",
+      "method": "get",
+      "endpoint": "/load_balancers",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postLoadBalancers": {
+      "displayName": "Create a Load Balancer",
+      "description": "Creates a Load Balancer.  #### Call specific error codes  | Code                                    | Description       ...",
+      "method": "post",
+      "endpoint": "/load_balancers",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "algorithm",
+          "location": "body",
+          "required": true,
+          "description": "Algorithm of the Load Balancer",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "load_balancer_type",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of the Load Balancer type this Load Balancer should be created with",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. lb11"
+        },
+        {
+          "name": "location",
+          "location": "body",
+          "required": false,
+          "description": "ID or name of Location to create Load Balancer in",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the Load Balancer",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Web Frontend"
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": false,
+          "description": "ID of the network the Load Balancer should be attached to on creation",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "network_zone",
+          "location": "body",
+          "required": false,
+          "description": "Name of network zone",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. eu-central"
+        },
+        {
+          "name": "public_interface",
+          "location": "body",
+          "required": false,
+          "description": "Enable or disable the public interface of the Load Balancer",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "services",
+          "location": "body",
+          "required": false,
+          "description": "Array of services",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "targets",
+          "location": "body",
+          "required": false,
+          "description": "Array of targets",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "deleteLoadBalancersId": {
+      "displayName": "Delete a Load Balancer",
+      "description": "Deletes a Load Balancer",
+      "method": "delete",
+      "endpoint": "/load_balancers/{id}",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getLoadBalancersId": {
+      "displayName": "Get a Load Balancer",
+      "description": "Gets a specific Load Balancer object",
+      "method": "get",
+      "endpoint": "/load_balancers/{id}",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putLoadBalancersId": {
+      "displayName": "Update a Load Balancer",
+      "description": "Updates a Load Balancer. You can update a Load Balancer’s name and a Load Balancer’s labels.  Note that when updating la...",
+      "method": "put",
+      "endpoint": "/load_balancers/{id}",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New Load Balancer name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. new-name"
+        }
+      ]
+    },
+    "getLoadBalancersIdActions": {
+      "displayName": "Get all Actions for a Load Balancer",
+      "description": "Returns all Action objects for a Load Balancer. You can sort the results by using the `sort` URI parameter, and filter t...",
+      "method": "get",
+      "endpoint": "/load_balancers/{id}/actions",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsAddService": {
+      "displayName": "Add Service",
+      "description": "Adds a service to a Load Balancer.  #### Call specific error codes  | Code                       | Description          ...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/add_service",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "destination_port",
+          "location": "body",
+          "required": true,
+          "description": "Port the Load Balancer will balance to",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "health_check",
+          "location": "body",
+          "required": true,
+          "description": "Service health check",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "http",
+          "location": "body",
+          "required": false,
+          "description": "Configuration option for protocols http and https",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "listen_port",
+          "location": "body",
+          "required": true,
+          "description": "Port the Load Balancer listens on",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "protocol",
+          "location": "body",
+          "required": true,
+          "description": "Protocol of the Load Balancer",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. https"
+        },
+        {
+          "name": "proxyprotocol",
+          "location": "body",
+          "required": true,
+          "description": "Is Proxyprotocol enabled or not",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsAddTarget": {
+      "displayName": "Add Target",
+      "description": "Adds a target to a Load Balancer.  #### Call specific error codes  | Code                                    | Descripti...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/add_target",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": false,
+          "description": "IP targets where the traffic should be routed through. It is only possible to use the (Public or vSwitch) IPs of Hetzner...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "label_selector",
+          "location": "body",
+          "required": false,
+          "description": "Configuration for label selector targets, required if type is `label_selector`",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": false,
+          "description": "Configuration for type Server, required if type is `server`",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Type of the resource",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "use_private_ip",
+          "location": "body",
+          "required": false,
+          "description": "Use the private network IP instead of the public IP of the Server, requires the Server and Load Balancer to be in the sa...",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsAttachToNetwork": {
+      "displayName": "Attach a Load Balancer to a Network",
+      "description": "Attach a Load Balancer to a Network.  **Call specific error codes**  | Code                             | Description   ...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/attach_to_network",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": false,
+          "description": "IP to request to be assigned to this Load Balancer; if you do not provide this then you will be auto assigned an IP addr...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.1"
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": true,
+          "description": "ID of an existing network to attach the Load Balancer to",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsChangeAlgorithm": {
+      "displayName": "Change Algorithm",
+      "description": "Change the algorithm that determines to which target new requests are sent",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/change_algorithm",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Algorithm of the Load Balancer",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsChangeDnsPtr": {
+      "displayName": "Change reverse DNS entry for this Load Balancer",
+      "description": "Changes the hostname that will appear when getting the hostname belonging to the public IPs (IPv4 and IPv6) of this Load...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/change_dns_ptr",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "dns_ptr",
+          "location": "body",
+          "required": true,
+          "description": "Hostname to set as a reverse DNS PTR entry",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. lb1.example.com"
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": true,
+          "description": "Public IP address for which the reverse DNS entry should be set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1.2.3.4"
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsChangeProtection": {
+      "displayName": "Change Load Balancer Protection",
+      "description": "Changes the protection configuration of a Load Balancer",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/change_protection",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Load Balancer from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsChangeType": {
+      "displayName": "Change the Type of a Load Balancer",
+      "description": "Changes the type (Max Services, Max Targets and Max Connections) of a Load Balancer.  **Call specific error codes**  | C...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/change_type",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "load_balancer_type",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of Load Balancer type the Load Balancer should migrate to",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. lb21"
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsDeleteService": {
+      "displayName": "Delete Service",
+      "description": "Delete a service of a Load Balancer",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/delete_service",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "listen_port",
+          "location": "body",
+          "required": true,
+          "description": "The listen port of the service you want to delete",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsDetachFromNetwork": {
+      "displayName": "Detach a Load Balancer from a Network",
+      "description": "Detaches a Load Balancer from a network",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/detach_from_network",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": true,
+          "description": "ID of an existing network to detach the Load Balancer from",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsDisablePublicInterface": {
+      "displayName": "Disable the public interface of a Load Balancer",
+      "description": "Disable the public interface of a Load Balancer. The Load Balancer will be not accessible from the internet via its publ...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/disable_public_interface",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsEnablePublicInterface": {
+      "displayName": "Enable the public interface of a Load Balancer",
+      "description": "Enable the public interface of a Load Balancer. The Load Balancer will be accessible from the internet via its public IP...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/enable_public_interface",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsRemoveTarget": {
+      "displayName": "Remove Target",
+      "description": "Removes a target from a Load Balancer",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/remove_target",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": false,
+          "description": "IP targets where the traffic should be routed through. It is only possible to use the (Public or vSwitch) IPs of Hetzner...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "label_selector",
+          "location": "body",
+          "required": false,
+          "description": "Configuration for label selector targets, required if type is `label_selector`",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": false,
+          "description": "Configuration for type Server, required if type is `server`",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Type of the resource",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postLoadBalancersIdActionsUpdateService": {
+      "displayName": "Update Service",
+      "description": "Updates a Load Balancer Service.  #### Call specific error codes  | Code                       | Description            ...",
+      "method": "post",
+      "endpoint": "/load_balancers/{id}/actions/update_service",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "destination_port",
+          "location": "body",
+          "required": true,
+          "description": "Port the Load Balancer will balance to",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "health_check",
+          "location": "body",
+          "required": true,
+          "description": "Service health check",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "http",
+          "location": "body",
+          "required": false,
+          "description": "Configuration option for protocols http and https",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "listen_port",
+          "location": "body",
+          "required": true,
+          "description": "Port the Load Balancer listens on",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "protocol",
+          "location": "body",
+          "required": true,
+          "description": "Protocol of the Load Balancer",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. https"
+        },
+        {
+          "name": "proxyprotocol",
+          "location": "body",
+          "required": true,
+          "description": "Is Proxyprotocol enabled or not",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "getLoadBalancersIdActionsActionId": {
+      "displayName": "Get an Action for a Load Balancer",
+      "description": "Returns a specific Action for a Load Balancer",
+      "method": "get",
+      "endpoint": "/load_balancers/{id}/actions/{action_id}",
+      "tags": [
+        "Load Balancer Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getLoadBalancersIdMetrics": {
+      "displayName": "Get Metrics for a LoadBalancer",
+      "description": "You must specify the type of metric to get: `open_connections`, `connections_per_second`, `requests_per_second` or `band...",
+      "method": "get",
+      "endpoint": "/load_balancers/{id}/metrics",
+      "tags": [
+        "Load Balancer"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Load Balancer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "type",
+          "location": "query",
+          "required": true,
+          "description": "Type of metrics to get",
+          "type": "options",
+          "default": "open_connections",
+          "options": [
+            "open_connections",
+            "connections_per_second",
+            "requests_per_second",
+            "bandwidth"
+          ]
+        },
+        {
+          "name": "start",
+          "location": "query",
+          "required": true,
+          "description": "Start of period to get Metrics for (in ISO-8601 format)",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "end",
+          "location": "query",
+          "required": true,
+          "description": "End of period to get Metrics for (in ISO-8601 format)",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "step",
+          "location": "query",
+          "required": false,
+          "description": "Resolution of results in seconds",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getLocations": {
+      "displayName": "Get all Locations",
+      "description": "Returns all Location objects",
+      "method": "get",
+      "endpoint": "/locations",
+      "tags": [
+        "Location"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Locations by their name. The response will only contain the Location matching the specified name",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getLocationsId": {
+      "displayName": "Get a Location",
+      "description": "Returns a specific Location object",
+      "method": "get",
+      "endpoint": "/locations/{id}",
+      "tags": [
+        "Location"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of Location",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getNetworks": {
+      "displayName": "Get all Networks",
+      "description": "Gets all existing networks that you have available",
+      "method": "get",
+      "endpoint": "/networks",
+      "tags": [
+        "Network"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter networks by their name. The response will only contain the networks matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter networks by labels. The response will only contain networks with a matching label selector pattern",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postNetworks": {
+      "displayName": "Create a Network",
+      "description": "Creates a network with the specified `ip_range`.  You may specify one or more `subnets`. You can also add more Subnets l...",
+      "method": "post",
+      "endpoint": "/networks",
+      "tags": [
+        "Network"
+      ],
+      "params": [
+        {
+          "name": "ip_range",
+          "location": "body",
+          "required": true,
+          "description": "IP range of the whole network which must span all included subnets. Must be one of the private IPv4 ranges of RFC1918. M...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.0.0/16"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the network",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. mynet"
+        },
+        {
+          "name": "routes",
+          "location": "body",
+          "required": false,
+          "description": "Array of routes set in this network. The destination of the route must be one of the private IPv4 ranges of RFC1918. The...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "subnets",
+          "location": "body",
+          "required": false,
+          "description": "Array of subnets allocated",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "deleteNetworksId": {
+      "displayName": "Delete a Network",
+      "description": "Deletes a network. If there are Servers attached they will be detached in the background.  Note: if the network object c...",
+      "method": "delete",
+      "endpoint": "/networks/{id}",
+      "tags": [
+        "Network"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the network",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getNetworksId": {
+      "displayName": "Get a Network",
+      "description": "Gets a specific network object",
+      "method": "get",
+      "endpoint": "/networks/{id}",
+      "tags": [
+        "Network"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the network",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putNetworksId": {
+      "displayName": "Update a Network",
+      "description": "Updates the network properties.  Note that when updating labels, the network’s current set of labels will be replaced wi...",
+      "method": "put",
+      "endpoint": "/networks/{id}",
+      "tags": [
+        "Network"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New network name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. new-name"
+        }
+      ]
+    },
+    "getNetworksIdActions": {
+      "displayName": "Get all Actions for a Network",
+      "description": "Returns all Action objects for a Network. You can sort the results by using the `sort` URI parameter, and filter them wi...",
+      "method": "get",
+      "endpoint": "/networks/{id}/actions",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postNetworksIdActionsAddRoute": {
+      "displayName": "Add a route to a Network",
+      "description": "Adds a route entry to a Network.  Note: if the Network object changes during the request, the response will be a “confli...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/add_route",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "destination",
+          "location": "body",
+          "required": true,
+          "description": "Destination network or host of this route. Must not overlap with an existing ip_range in any subnets or with any destina...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.100.1.0/24"
+        },
+        {
+          "name": "gateway",
+          "location": "body",
+          "required": true,
+          "description": "Gateway for the route. Cannot be the first IP of the networks ip_range, an IP behind a vSwitch or 172.31.1.1, as this IP...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.1"
+        }
+      ]
+    },
+    "postNetworksIdActionsAddSubnet": {
+      "displayName": "Add a subnet to a Network",
+      "description": "Adds a new subnet object to the Network. If you do not specify an `ip_range` for the subnet we will automatically pick t...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/add_subnet",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip_range",
+          "location": "body",
+          "required": false,
+          "description": "Range to allocate IPs from. Must be a Subnet of the ip_range of the parent network object and must not overlap with any ...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.0/24"
+        },
+        {
+          "name": "network_zone",
+          "location": "body",
+          "required": true,
+          "description": "Name of Network zone. The Location object contains the `network_zone` property each Location belongs to",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. eu-central"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Type of Subnetwork",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "vswitch_id",
+          "location": "body",
+          "required": false,
+          "description": "ID of the robot vSwitch. Must be supplied if the subnet is of type vswitch",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postNetworksIdActionsChangeIpRange": {
+      "displayName": "Change IP range of a Network",
+      "description": "Changes the IP range of a Network. IP ranges can only be extended and never shrunk. You can only add IPs at the end of a...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/change_ip_range",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip_range",
+          "location": "body",
+          "required": true,
+          "description": "The new prefix for the whole Network",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.0.0/12"
+        }
+      ]
+    },
+    "postNetworksIdActionsChangeProtection": {
+      "displayName": "Change Network Protection",
+      "description": "Changes the protection configuration of a Network.  Note: if the Network object changes during the request, the response...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/change_protection",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Network from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postNetworksIdActionsDeleteRoute": {
+      "displayName": "Delete a route from a Network",
+      "description": "Delete a route entry from a Network.  Note: if the Network object changes during the request, the response will be a “co...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/delete_route",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "destination",
+          "location": "body",
+          "required": true,
+          "description": "Destination network or host of this route. Must not overlap with an existing ip_range in any subnets or with any destina...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.100.1.0/24"
+        },
+        {
+          "name": "gateway",
+          "location": "body",
+          "required": true,
+          "description": "Gateway for the route. Cannot be the first IP of the networks ip_range, an IP behind a vSwitch or 172.31.1.1, as this IP...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.1"
+        }
+      ]
+    },
+    "postNetworksIdActionsDeleteSubnet": {
+      "displayName": "Delete a subnet from a Network",
+      "description": "Deletes a single subnet entry from a Network. You cannot delete subnets which still have Servers attached. If you have S...",
+      "method": "post",
+      "endpoint": "/networks/{id}/actions/delete_subnet",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ip_range",
+          "location": "body",
+          "required": true,
+          "description": "IP range of subnet to delete",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.0/24"
+        }
+      ]
+    },
+    "getNetworksIdActionsActionId": {
+      "displayName": "Get an Action for a Network",
+      "description": "Returns a specific Action for a Network",
+      "method": "get",
+      "endpoint": "/networks/{id}/actions/{action_id}",
+      "tags": [
+        "Network Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Network",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getPlacementGroups": {
+      "displayName": "Get all PlacementGroups",
+      "description": "Returns all PlacementGroup objects",
+      "method": "get",
+      "endpoint": "/placement_groups",
+      "tags": [
+        "Placement Group"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "type",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. The response will only contain PlacementGroups matching the type",
+          "type": "options",
+          "default": "spread",
+          "options": [
+            "spread"
+          ]
+        }
+      ]
+    },
+    "postPlacementGroups": {
+      "displayName": "Create a PlacementGroup",
+      "description": "Creates a new PlacementGroup.",
+      "method": "post",
+      "endpoint": "/placement_groups",
+      "tags": [
+        "Placement Group"
+      ],
+      "params": [
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the PlacementGroup",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my Placement Group"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Define the Placement Group Type",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. spread"
+        }
+      ]
+    },
+    "deletePlacementGroupsId": {
+      "displayName": "Delete a PlacementGroup",
+      "description": "Deletes a PlacementGroup",
+      "method": "delete",
+      "endpoint": "/placement_groups/{id}",
+      "tags": [
+        "Placement Group"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getPlacementGroupsId": {
+      "displayName": "Get a PlacementGroup",
+      "description": "Gets a specific PlacementGroup object",
+      "method": "get",
+      "endpoint": "/placement_groups/{id}",
+      "tags": [
+        "Placement Group"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putPlacementGroupsId": {
+      "displayName": "Update a PlacementGroup",
+      "description": "Updates the PlacementGroup properties.  Note that when updating labels, the PlacementGroup’s current set of labels will ...",
+      "method": "put",
+      "endpoint": "/placement_groups/{id}",
+      "tags": [
+        "Placement Group"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New PlacementGroup name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my Placement Group"
+        }
+      ]
+    },
+    "getPricing": {
+      "displayName": "Get all prices",
+      "description": "Returns prices for all resources available on the platform. VAT and currency of the Project owner are used for calculati...",
+      "method": "get",
+      "endpoint": "/pricing",
+      "tags": [
+        "Pricing"
+      ],
+      "params": []
+    },
+    "getPrimaryIps": {
+      "displayName": "Get all Primary IPs",
+      "description": "Returns all Primary IP objects",
+      "method": "get",
+      "endpoint": "/primary_ips",
+      "tags": [
+        "Primary IP"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "ip",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their ip. The response will only contain the resources matching the specified ip",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 127.0.0.1"
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. Choices id id:asc id:desc created created:asc created:desc",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        }
+      ]
+    },
+    "postPrimaryIps": {
+      "displayName": "Create a Primary IP",
+      "description": "Creates a new Primary IP, optionally assigned to a Server.  If you want to create a Primary IP that is not assigned to a...",
+      "method": "post",
+      "endpoint": "/primary_ips",
+      "tags": [
+        "Primary IP"
+      ],
+      "params": [
+        {
+          "name": "assignee_id",
+          "location": "body",
+          "required": false,
+          "description": "ID of the resource the Primary IP should be assigned to. Omitted if it should not be assigned",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "assignee_type",
+          "location": "body",
+          "required": true,
+          "description": "Resource type the Primary IP can be assigned to",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. server"
+        },
+        {
+          "name": "auto_delete",
+          "location": "body",
+          "required": false,
+          "description": "Delete the Primary IP when the Server it is assigned to is deleted. If omitted defaults to `false`",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "datacenter",
+          "location": "body",
+          "required": false,
+          "description": "ID or name of Datacenter the Primary IP will be bound to. Needs to be omitted if `assignee_id` is passed",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. fsn1-dc8"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my-ip"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "Primary IP type",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deletePrimaryIpsId": {
+      "displayName": "Delete a Primary IP",
+      "description": "Deletes a Primary IP.  The Primary IP may be assigned to a Server. In this case it is unassigned automatically. The Serv...",
+      "method": "delete",
+      "endpoint": "/primary_ips/{id}",
+      "tags": [
+        "Primary IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getPrimaryIpsId": {
+      "displayName": "Get a Primary IP",
+      "description": "Returns a specific Primary IP object",
+      "method": "get",
+      "endpoint": "/primary_ips/{id}",
+      "tags": [
+        "Primary IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putPrimaryIpsId": {
+      "displayName": "Update a Primary IP",
+      "description": "Updates the Primary IP.  Note that when updating labels, the Primary IP's current set of labels will be replaced with th...",
+      "method": "put",
+      "endpoint": "/primary_ips/{id}",
+      "tags": [
+        "Primary IP"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "auto_delete",
+          "location": "body",
+          "required": false,
+          "description": "Delete this Primary IP when the resource it is assigned to is deleted",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New unique name to set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my-ip"
+        }
+      ]
+    },
+    "postPrimaryIpsIdActionsAssign": {
+      "displayName": "Assign a Primary IP to a resource",
+      "description": "Assigns a Primary IP to a Server.  A Server can only have one Primary IP of type `ipv4` and one of type `ipv6` assigned....",
+      "method": "post",
+      "endpoint": "/primary_ips/{id}/actions/assign",
+      "tags": [
+        "Primary IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Primary IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "assignee_id",
+          "location": "body",
+          "required": true,
+          "description": "ID of a resource of type `assignee_type`",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "assignee_type",
+          "location": "body",
+          "required": true,
+          "description": "Type of resource assigning the Primary IP to",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. server"
+        }
+      ]
+    },
+    "postPrimaryIpsIdActionsChangeDnsPtr": {
+      "displayName": "Change reverse DNS entry for a Primary IP",
+      "description": "Changes the hostname that will appear when getting the hostname belonging to this Primary IP",
+      "method": "post",
+      "endpoint": "/primary_ips/{id}/actions/change_dns_ptr",
+      "tags": [
+        "Primary IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Primary IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "dns_ptr",
+          "location": "body",
+          "required": true,
+          "description": "Hostname to set as a reverse DNS PTR entry, will reset to original default value if `null`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. server02.example.com"
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": true,
+          "description": "IP address for which to set the reverse DNS entry",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1.2.3.4"
+        }
+      ]
+    },
+    "postPrimaryIpsIdActionsChangeProtection": {
+      "displayName": "Change Primary IP Protection",
+      "description": "Changes the protection configuration of a Primary IP.  A Primary IP can only be delete protected if its `auto_delete` pr...",
+      "method": "post",
+      "endpoint": "/primary_ips/{id}/actions/change_protection",
+      "tags": [
+        "Primary IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Primary IP",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Primary IP from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postPrimaryIpsIdActionsUnassign": {
+      "displayName": "Unassign a Primary IP from a resource",
+      "description": "Unassigns a Primary IP from a Server.  The Server must be powered off (status `off`) in order for this operation to succ...",
+      "method": "post",
+      "endpoint": "/primary_ips/{id}/actions/unassign",
+      "tags": [
+        "Primary IP Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Primary IP",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getServerTypes": {
+      "displayName": "Get all Server Types",
+      "description": "Gets all Server type objects",
+      "method": "get",
+      "endpoint": "/server_types",
+      "tags": [
+        "Server Type"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter Server types by their name. The response will only contain the Server type matching the specified ...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getServerTypesId": {
+      "displayName": "Get a Server Type",
+      "description": "Gets a specific Server type object",
+      "method": "get",
+      "endpoint": "/server_types/{id}",
+      "tags": [
+        "Server Type"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of Server Type",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getServers": {
+      "displayName": "Get all Servers",
+      "description": "Returns all existing Server objects",
+      "method": "get",
+      "endpoint": "/servers",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. The response will only contain Server matching the status",
+          "type": "options",
+          "default": "initializing",
+          "options": [
+            "initializing",
+            "starting",
+            "running",
+            "stopping",
+            "off",
+            "deleting",
+            "rebuilding",
+            "migrating",
+            "unknown"
+          ]
+        }
+      ]
+    },
+    "postServers": {
+      "displayName": "Create a Server",
+      "description": "Creates a new Server. Returns preliminary information about the Server as well as an Action that covers progress of crea...",
+      "method": "post",
+      "endpoint": "/servers",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "automount",
+          "location": "body",
+          "required": false,
+          "description": "Auto-mount Volumes after attach",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "datacenter",
+          "location": "body",
+          "required": false,
+          "description": "ID or name of Datacenter to create Server in (must not be used together with location)",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. nbg1-dc3"
+        },
+        {
+          "name": "firewalls",
+          "location": "body",
+          "required": false,
+          "description": "Firewalls which should be applied on the Server's public network interface at creation time",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "image",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of the Image the Server is created from",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. ubuntu-20.04"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "location",
+          "location": "body",
+          "required": false,
+          "description": "ID or name of Location to create Server in (must not be used together with datacenter)",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. nbg1"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the Server to create (must be unique per Project and a valid hostname as per RFC 1123)",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my-server"
+        },
+        {
+          "name": "networks",
+          "location": "body",
+          "required": false,
+          "description": "Network IDs which should be attached to the Server private network interface at the creation time",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "placement_group",
+          "location": "body",
+          "required": false,
+          "description": "ID of the Placement Group the server should be in",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "public_net",
+          "location": "body",
+          "required": false,
+          "description": "Public Network options",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "server_type",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of the Server type this Server should be created with",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. cx11"
+        },
+        {
+          "name": "ssh_keys",
+          "location": "body",
+          "required": false,
+          "description": "SSH key IDs (`integer`) or names (`string`) which should be injected into the Server at creation time",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "start_after_create",
+          "location": "body",
+          "required": false,
+          "description": "Start Server right after creation. Defaults to true",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "user_data",
+          "location": "body",
+          "required": false,
+          "description": "Cloud-Init user data to use during Server creation. This field is limited to 32KiB",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. #cloud-config\nruncmd:\n- [touch, /root/cloud-init-worked]\n"
+        },
+        {
+          "name": "volumes",
+          "location": "body",
+          "required": false,
+          "description": "Volume IDs which should be attached to the Server at the creation time. Volumes must be in the same Location",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "deleteServersId": {
+      "displayName": "Delete a Server",
+      "description": "Deletes a Server. This immediately removes the Server from your account, and it is no longer accessible",
+      "method": "delete",
+      "endpoint": "/servers/{id}",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getServersId": {
+      "displayName": "Get a Server",
+      "description": "Returns a specific Server object. The Server must exist inside the Project",
+      "method": "get",
+      "endpoint": "/servers/{id}",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putServersId": {
+      "displayName": "Update a Server",
+      "description": "Updates a Server. You can update a Server’s name and a Server’s labels. Please note that Server names must be unique per...",
+      "method": "put",
+      "endpoint": "/servers/{id}",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New name to set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my-server"
+        }
+      ]
+    },
+    "getServersIdActions": {
+      "displayName": "Get all Actions for a Server",
+      "description": "Returns all Action objects for a Server. You can `sort` the results by using the sort URI parameter, and filter them wit...",
+      "method": "get",
+      "endpoint": "/servers/{id}/actions",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Resource",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postServersIdActionsAddToPlacementGroup": {
+      "displayName": "Add a Server to a Placement Group",
+      "description": "Adds a Server to a Placement Group.  Server must be powered off for this command to succeed.  #### Call specific error c...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/add_to_placement_group",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "placement_group",
+          "location": "body",
+          "required": true,
+          "description": "ID of Placement Group the Server should be added to",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsAttachIso": {
+      "displayName": "Attach an ISO to a Server",
+      "description": "Attaches an ISO to a Server. The Server will immediately see it as a new disk. An already attached ISO will automaticall...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/attach_iso",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "iso",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of ISO to attach to the Server as listed in GET `/isos`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. FreeBSD-11.0-RELEASE-amd64-dvd1"
+        }
+      ]
+    },
+    "postServersIdActionsAttachToNetwork": {
+      "displayName": "Attach a Server to a Network",
+      "description": "Attaches a Server to a network. This will complement the fixed public Server interface by adding an additional ethernet ...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/attach_to_network",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "alias_ips",
+          "location": "body",
+          "required": false,
+          "description": "Additional IPs to be assigned to this Server",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": false,
+          "description": "IP to request to be assigned to this Server; if you do not provide this then you will be auto assigned an IP address",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 10.0.1.1"
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": true,
+          "description": "ID of an existing network to attach the Server to",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsChangeAliasIps": {
+      "displayName": "Change alias IPs of a Network",
+      "description": "Changes the alias IPs of an already attached Network. Note that the existing aliases for the specified Network will be r...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/change_alias_ips",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "alias_ips",
+          "location": "body",
+          "required": true,
+          "description": "New alias IPs to set for this Server",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": true,
+          "description": "ID of an existing Network already attached to the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsChangeDnsPtr": {
+      "displayName": "Change reverse DNS entry for this Server",
+      "description": "Changes the hostname that will appear when getting the hostname belonging to the primary IPs (IPv4 and IPv6) of this Ser...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/change_dns_ptr",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "dns_ptr",
+          "location": "body",
+          "required": true,
+          "description": "Hostname to set as a reverse DNS PTR entry, reset to original value if `null`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. server01.example.com"
+        },
+        {
+          "name": "ip",
+          "location": "body",
+          "required": true,
+          "description": "Primary IP address for which the reverse DNS entry should be set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1.2.3.4"
+        }
+      ]
+    },
+    "postServersIdActionsChangeProtection": {
+      "displayName": "Change Server Protection",
+      "description": "Changes the protection configuration of the Server",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/change_protection",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Server from being deleted (currently delete and rebuild attribute needs to have the same value)",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "rebuild",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Server from being rebuilt (currently delete and rebuild attribute needs to have the same value)",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postServersIdActionsChangeType": {
+      "displayName": "Change the Type of a Server",
+      "description": "Changes the type (Cores, RAM and disk sizes) of a Server.  Server must be powered off for this command to succeed.  This...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/change_type",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "server_type",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of Server type the Server should migrate to",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. cx11"
+        },
+        {
+          "name": "upgrade_disk",
+          "location": "body",
+          "required": true,
+          "description": "If false, do not upgrade the disk (this allows downgrading the Server type later)",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postServersIdActionsCreateImage": {
+      "displayName": "Create Image from a Server",
+      "description": "Creates an Image (snapshot) from a Server by copying the contents of its disks. This creates a snapshot of the current s...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/create_image",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "description",
+          "location": "body",
+          "required": false,
+          "description": "Description of the Image, will be auto-generated if not set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. my image"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "Type of Image to create (default: `snapshot`)",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. snapshot"
+        }
+      ]
+    },
+    "postServersIdActionsDetachFromNetwork": {
+      "displayName": "Detach a Server from a Network",
+      "description": "Detaches a Server from a network. The interface for this network will vanish",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/detach_from_network",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "network",
+          "location": "body",
+          "required": true,
+          "description": "ID of an existing network to detach the Server from",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsDetachIso": {
+      "displayName": "Detach an ISO from a Server",
+      "description": "Detaches an ISO from a Server. In case no ISO Image is attached to the Server, the status of the returned Action is imme...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/detach_iso",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsDisableBackup": {
+      "displayName": "Disable Backups for a Server",
+      "description": "Disables the automatic backup option and deletes all existing Backups for a Server. No more additional charges for backu...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/disable_backup",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsDisableRescue": {
+      "displayName": "Disable Rescue Mode for a Server",
+      "description": "Disables the Hetzner Rescue System for a Server. This makes a Server start from its disks on next reboot.  Rescue Mode i...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/disable_rescue",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsEnableBackup": {
+      "displayName": "Enable and Configure Backups for a Server",
+      "description": "Enables and configures the automatic daily backup option for the Server. Enabling automatic backups will increase the pr...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/enable_backup",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsEnableRescue": {
+      "displayName": "Enable Rescue Mode for a Server",
+      "description": "Enable the Hetzner Rescue System for this Server. The next time a Server with enabled rescue mode boots it will start a ...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/enable_rescue",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "ssh_keys",
+          "location": "body",
+          "required": false,
+          "description": "Array of SSH key IDs which should be injected into the rescue system",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "Type of rescue system to boot (default: `linux64`)",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postServersIdActionsPoweroff": {
+      "displayName": "Power off a Server",
+      "description": "Cuts power to the Server. This forcefully stops it without giving the Server operating system time to gracefully stop. M...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/poweroff",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsPoweron": {
+      "displayName": "Power on a Server",
+      "description": "Starts a Server by turning its power on",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/poweron",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsReboot": {
+      "displayName": "Soft-reboot a Server",
+      "description": "Reboots a Server gracefully by sending an ACPI request. The Server operating system must support ACPI and react to the r...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/reboot",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsRebuild": {
+      "displayName": "Rebuild a Server from an Image",
+      "description": "Rebuilds a Server overwriting its disk with the content of an Image, thereby **destroying all data** on the target Serve...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/rebuild",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "image",
+          "location": "body",
+          "required": true,
+          "description": "ID or name of Image to rebuilt from",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. ubuntu-20.04"
+        }
+      ]
+    },
+    "postServersIdActionsRemoveFromPlacementGroup": {
+      "displayName": "Remove from Placement Group",
+      "description": "Removes a Server from a Placement Group.",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/remove_from_placement_group",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsRequestConsole": {
+      "displayName": "Request Console for a Server",
+      "description": "Requests credentials for remote access via VNC over websocket to keyboard, monitor, and mouse for a Server. The provided...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/request_console",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsReset": {
+      "displayName": "Reset a Server",
+      "description": "Cuts power to a Server and starts it again. This forcefully stops it without giving the Server operating system time to ...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/reset",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsResetPassword": {
+      "displayName": "Reset root Password of a Server",
+      "description": "Resets the root password. Only works for Linux systems that are running the qemu guest agent. Server must be powered on ...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/reset_password",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postServersIdActionsShutdown": {
+      "displayName": "Shutdown a Server",
+      "description": "Shuts down a Server gracefully by sending an ACPI shutdown request. The Server operating system must support ACPI and re...",
+      "method": "post",
+      "endpoint": "/servers/{id}/actions/shutdown",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getServersIdActionsActionId": {
+      "displayName": "Get an Action for a Server",
+      "description": "Returns a specific Action object for a Server",
+      "method": "get",
+      "endpoint": "/servers/{id}/actions/{action_id}",
+      "tags": [
+        "Server Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getServersIdMetrics": {
+      "displayName": "Get Metrics for a Server",
+      "description": "Get Metrics for specified Server.  You must specify the type of metric to get: cpu, disk or network. You can also specif...",
+      "method": "get",
+      "endpoint": "/servers/{id}/metrics",
+      "tags": [
+        "Server"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Server",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "type",
+          "location": "query",
+          "required": true,
+          "description": "Type of metrics to get",
+          "type": "options",
+          "default": "cpu",
+          "options": [
+            "cpu",
+            "disk",
+            "network"
+          ]
+        },
+        {
+          "name": "start",
+          "location": "query",
+          "required": true,
+          "description": "Start of period to get Metrics for (in ISO-8601 format)",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "end",
+          "location": "query",
+          "required": true,
+          "description": "End of period to get Metrics for (in ISO-8601 format)",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "step",
+          "location": "query",
+          "required": false,
+          "description": "Resolution of results in seconds",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getSshKeys": {
+      "displayName": "Get all SSH keys",
+      "description": "Returns all SSH key objects",
+      "method": "get",
+      "endpoint": "/ssh_keys",
+      "tags": [
+        "SSH Key"
+      ],
+      "params": [
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "fingerprint",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter SSH keys by their fingerprint. The response will only contain the SSH key matching the specified f...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postSshKeys": {
+      "displayName": "Create an SSH key",
+      "description": "Creates a new SSH key with the given `name` and `public_key`. Once an SSH key is created, it can be used in other calls ...",
+      "method": "post",
+      "endpoint": "/ssh_keys",
+      "tags": [
+        "SSH Key"
+      ],
+      "params": [
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the SSH key",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. My ssh key"
+        },
+        {
+          "name": "public_key",
+          "location": "body",
+          "required": true,
+          "description": "Public key",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. ssh-rsa AAAjjk76kgf...Xt"
+        }
+      ]
+    },
+    "deleteSshKeysId": {
+      "displayName": "Delete an SSH key",
+      "description": "Deletes an SSH key. It cannot be used anymore",
+      "method": "delete",
+      "endpoint": "/ssh_keys/{id}",
+      "tags": [
+        "SSH Key"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the SSH key",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getSshKeysId": {
+      "displayName": "Get a SSH key",
+      "description": "Returns a specific SSH key object",
+      "method": "get",
+      "endpoint": "/ssh_keys/{id}",
+      "tags": [
+        "SSH Key"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the SSH key",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putSshKeysId": {
+      "displayName": "Update an SSH key",
+      "description": "Updates an SSH key. You can update an SSH key name and an SSH key labels.  Please note that when updating labels, the SS...",
+      "method": "put",
+      "endpoint": "/ssh_keys/{id}",
+      "tags": [
+        "SSH Key"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the SSH key",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": false,
+          "description": "New name Name to set",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. My ssh key"
+        }
+      ]
+    },
+    "getVolumes": {
+      "displayName": "Get all Volumes",
+      "description": "Gets all existing Volumes that you have available",
+      "method": "get",
+      "endpoint": "/volumes",
+      "tags": [
+        "Volume"
+      ],
+      "params": [
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times. The response will only contain Volumes matching the status",
+          "type": "options",
+          "default": "available",
+          "options": [
+            "available",
+            "creating"
+          ]
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "name",
+            "name:asc",
+            "name:desc",
+            "created",
+            "created:asc",
+            "created:desc"
+          ]
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by their name. The response will only contain the resources matching the specified name",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "label_selector",
+          "location": "query",
+          "required": false,
+          "description": "Can be used to filter resources by labels. The response will only contain resources matching the label selector",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postVolumes": {
+      "displayName": "Create a Volume",
+      "description": "Creates a new Volume attached to a Server. If you want to create a Volume that is not attached to a Server, you need to ...",
+      "method": "post",
+      "endpoint": "/volumes",
+      "tags": [
+        "Volume"
+      ],
+      "params": [
+        {
+          "name": "automount",
+          "location": "body",
+          "required": false,
+          "description": "Auto-mount Volume after attach. `server` must be provided",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "format",
+          "location": "body",
+          "required": false,
+          "description": "Format Volume after creation. One of: `xfs`, `ext4`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. xfs"
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "location",
+          "location": "body",
+          "required": false,
+          "description": "Location to create the Volume in (can be omitted if Server is specified)",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. nbg1"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "Name of the volume",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. databases-storage"
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": false,
+          "description": "Server to which to attach the Volume once it's created (Volume will be created in the same Location as the server)",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "size",
+          "location": "body",
+          "required": true,
+          "description": "Size of the Volume in GB",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "deleteVolumesId": {
+      "displayName": "Delete a Volume",
+      "description": "Deletes a volume. All Volume data is irreversibly destroyed. The Volume must not be attached to a Server and it must not...",
+      "method": "delete",
+      "endpoint": "/volumes/{id}",
+      "tags": [
+        "Volume"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getVolumesId": {
+      "displayName": "Get a Volume",
+      "description": "Gets a specific Volume object",
+      "method": "get",
+      "endpoint": "/volumes/{id}",
+      "tags": [
+        "Volume"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "putVolumesId": {
+      "displayName": "Update a Volume",
+      "description": "Updates the Volume properties.  Note that when updating labels, the volume’s current set of labels will be replaced with...",
+      "method": "put",
+      "endpoint": "/volumes/{id}",
+      "tags": [
+        "Volume"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume to update",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "User-defined labels (key-value pairs)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "New Volume name",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. database-storage"
+        }
+      ]
+    },
+    "getVolumesIdActions": {
+      "displayName": "Get all Actions for a Volume",
+      "description": "Returns all Action objects for a Volume. You can `sort` the results by using the sort URI parameter, and filter them wit...",
+      "method": "get",
+      "endpoint": "/volumes/{id}/actions",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "sort",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times",
+          "type": "options",
+          "default": "id",
+          "options": [
+            "id",
+            "id:asc",
+            "id:desc",
+            "command",
+            "command:asc",
+            "command:desc",
+            "status",
+            "status:asc",
+            "status:desc",
+            "progress",
+            "progress:asc",
+            "progress:desc",
+            "started",
+            "started:asc",
+            "started:desc",
+            "finished",
+            "finished:asc",
+            "finished:desc"
+          ]
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Can be used multiple times, the response will contain only Actions with specified statuses",
+          "type": "options",
+          "default": "running",
+          "options": [
+            "running",
+            "success",
+            "error"
+          ]
+        }
+      ]
+    },
+    "postVolumesIdActionsAttach": {
+      "displayName": "Attach Volume to a Server",
+      "description": "Attaches a Volume to a Server. Works only if the Server is in the same Location as the Volume",
+      "method": "post",
+      "endpoint": "/volumes/{id}/actions/attach",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "automount",
+          "location": "body",
+          "required": false,
+          "description": "Auto-mount the Volume after attaching it",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "server",
+          "location": "body",
+          "required": true,
+          "description": "ID of the Server the Volume will be attached to",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postVolumesIdActionsChangeProtection": {
+      "displayName": "Change Volume Protection",
+      "description": "Changes the protection configuration of a Volume",
+      "method": "post",
+      "endpoint": "/volumes/{id}/actions/change_protection",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "delete",
+          "location": "body",
+          "required": false,
+          "description": "If true, prevents the Volume from being deleted",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "postVolumesIdActionsDetach": {
+      "displayName": "Detach Volume",
+      "description": "Detaches a Volume from the Server it’s attached to. You may attach it to a Server again at a later time",
+      "method": "post",
+      "endpoint": "/volumes/{id}/actions/detach",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postVolumesIdActionsResize": {
+      "displayName": "Resize Volume",
+      "description": "Changes the size of a Volume. Note that downsizing a Volume is not possible",
+      "method": "post",
+      "endpoint": "/volumes/{id}/actions/resize",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "size",
+          "location": "body",
+          "required": true,
+          "description": "New Volume size in GB (must be greater than current size)",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "getVolumesIdActionsActionId": {
+      "displayName": "Get an Action for a Volume",
+      "description": "Returns a specific Action for a Volume",
+      "method": "get",
+      "endpoint": "/volumes/{id}/actions/{action_id}",
+      "tags": [
+        "Volume Action"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Volume",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "action_id",
+          "location": "path",
+          "required": true,
+          "description": "ID of the Action",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    }
+  }
+}

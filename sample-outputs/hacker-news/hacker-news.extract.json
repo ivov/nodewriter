@@ -1,0 +1,135 @@
+{
+  "descriptors": {
+    "name": "Hacker News",
+    "description": "",
+    "baseUrl": "https://hacker-news.firebaseio.com/v0",
+    "specVersion": "1.0.0",
+    "openApiVersion": "3.0.0",
+    "nodeTypeClassName": "HackerNews",
+    "auth": [],
+    "docsUrl": "https://docs.n8n.io/integrations/creating-nodes/",
+    "resources": [
+      "miscellaneous"
+    ]
+  },
+  "operations": {
+    "getItem": {
+      "displayName": "Retrieve an item from the API",
+      "description": "Retrieve an item from the API",
+      "method": "get",
+      "endpoint": "/item/{id}.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getUser": {
+      "displayName": "Retrieve a user from the API",
+      "description": "Retrieve a user from the API",
+      "method": "get",
+      "endpoint": "/user/{id}.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getMaxItem": {
+      "displayName": "Retrieve the current largest item id",
+      "description": "Retrieve the current largest item id",
+      "method": "get",
+      "endpoint": "/maxitem.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "topstories.json": {
+      "displayName": "Retrieve top 500 entries of story type topstories",
+      "description": "Retrieve top 500 entries of story type topstories",
+      "method": "get",
+      "endpoint": "/topstories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "newstories.json": {
+      "displayName": "Retrieve top 500 entries of story type newstories",
+      "description": "Retrieve top 500 entries of story type newstories",
+      "method": "get",
+      "endpoint": "/newstories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "beststories.json": {
+      "displayName": "Retrieve top 500 entries of story type beststories",
+      "description": "Retrieve top 500 entries of story type beststories",
+      "method": "get",
+      "endpoint": "/beststories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "askstories.json": {
+      "displayName": "Retrieve top 500 entries of story type askstories",
+      "description": "Retrieve top 500 entries of story type askstories",
+      "method": "get",
+      "endpoint": "/askstories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "showstories.json": {
+      "displayName": "Retrieve top 500 entries of story type showstories",
+      "description": "Retrieve top 500 entries of story type showstories",
+      "method": "get",
+      "endpoint": "/showstories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "jobstories.json": {
+      "displayName": "Retrieve top 500 entries of story type jobstories",
+      "description": "Retrieve top 500 entries of story type jobstories",
+      "method": "get",
+      "endpoint": "/jobstories.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    },
+    "updates": {
+      "displayName": "Get a list of updates to items and profiles",
+      "description": "Get a list of updates to items and profiles",
+      "method": "get",
+      "endpoint": "/updates.json",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": []
+    }
+  }
+}

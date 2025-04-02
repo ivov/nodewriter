@@ -1,0 +1,1410 @@
+{
+	"displayName": "N8n",
+	"name": "n8n",
+	"description": "n8n Public API",
+	"version": 1,
+	"group": ["transform"],
+	"subtitle": "={{ $parameter[\"operation\"] }}",
+	"defaults": { "name": "N8n" },
+	"inputs": ["main"],
+	"outputs": ["main"],
+	"requestDefaults": {
+		"baseURL": "/api/v1",
+		"headers": { "Content-Type": "application/json" },
+		"returnFullResponse": true
+	},
+	"credentials": [{ "name": "n8nApi", "required": true }],
+	"properties": [
+		{
+			"displayName": "Resource",
+			"name": "resource",
+			"type": "options",
+			"noDataExpression": true,
+			"options": [
+				{ "name": "Audit", "value": "audit" },
+				{ "name": "Credential", "value": "credential" },
+				{ "name": "Execution", "value": "execution" },
+				{ "name": "Tag", "value": "tag" },
+				{ "name": "Workflow", "value": "workflow" },
+				{ "name": "User", "value": "user" },
+				{ "name": "Source Control", "value": "sourceControl" },
+				{ "name": "Variable", "value": "variable" },
+				{ "name": "Project", "value": "project" }
+			],
+			"default": "audit"
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postAudit",
+			"options": [
+				{
+					"name": "Generate an audit",
+					"value": "postAudit",
+					"action": "Generate a security audit for your n8n instance",
+					"routing": { "request": { "method": "POST", "url": "/audit" } }
+				}
+			],
+			"displayOptions": { "show": { "resource": ["audit"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postCredentials",
+			"options": [
+				{
+					"name": "Create a credential",
+					"value": "postCredentials",
+					"action": "Creates a credential that can be used by nodes of the specified type",
+					"routing": { "request": { "method": "POST", "url": "/credentials" } }
+				},
+				{
+					"name": "Delete credential by ID",
+					"value": "deleteCredential",
+					"action": "Deletes a credential from your instance. You must be the owner of the credentials",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/credentials/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Show credential data schema",
+					"value": "getCredentialsSchemaCredentialtypename",
+					"action": "Show credential data schema",
+					"routing": {
+						"request": {
+							"method": "GET",
+							"url": "=/credentials/schema/{{ $parameter[\"credentialTypeName\"] }}"
+						}
+					}
+				}
+			],
+			"displayOptions": { "show": { "resource": ["credential"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "getExecutions",
+			"options": [
+				{
+					"name": "Retrieve all executions",
+					"value": "getExecutions",
+					"action": "Retrieve all executions from your instance",
+					"routing": { "request": { "method": "GET", "url": "/executions" } }
+				},
+				{
+					"name": "Retrieve an execution",
+					"value": "getExecutionsId",
+					"action": "Retrieve an execution from your instance",
+					"routing": {
+						"request": { "method": "GET", "url": "=/executions/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Delete an execution",
+					"value": "deleteExecutionsId",
+					"action": "Deletes an execution from your instance",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/executions/{{ $parameter[\"id\"] }}" }
+					}
+				}
+			],
+			"displayOptions": { "show": { "resource": ["execution"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postTags",
+			"options": [
+				{
+					"name": "Create a tag",
+					"value": "postTags",
+					"action": "Create a tag in your instance",
+					"routing": { "request": { "method": "POST", "url": "/tags" } }
+				},
+				{
+					"name": "Retrieve all tags",
+					"value": "getTags",
+					"action": "Retrieve all tags from your instance",
+					"routing": { "request": { "method": "GET", "url": "/tags" } }
+				},
+				{
+					"name": "Retrieves a tag",
+					"value": "getTagsId",
+					"action": "Retrieves a tag",
+					"routing": { "request": { "method": "GET", "url": "=/tags/{{ $parameter[\"id\"] }}" } }
+				},
+				{
+					"name": "Delete a tag",
+					"value": "deleteTagsId",
+					"action": "Deletes a tag",
+					"routing": { "request": { "method": "DELETE", "url": "=/tags/{{ $parameter[\"id\"] }}" } }
+				},
+				{
+					"name": "Update a tag",
+					"value": "putTagsId",
+					"action": "Update a tag",
+					"routing": { "request": { "method": "PUT", "url": "=/tags/{{ $parameter[\"id\"] }}" } }
+				}
+			],
+			"displayOptions": { "show": { "resource": ["tag"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postWorkflows",
+			"options": [
+				{
+					"name": "Create a workflow",
+					"value": "postWorkflows",
+					"action": "Create a workflow in your instance",
+					"routing": { "request": { "method": "POST", "url": "/workflows" } }
+				},
+				{
+					"name": "Retrieve all workflows",
+					"value": "getWorkflows",
+					"action": "Retrieve all workflows from your instance",
+					"routing": { "request": { "method": "GET", "url": "/workflows" } }
+				},
+				{
+					"name": "Retrieves a workflow",
+					"value": "getWorkflowsId",
+					"action": "Retrieves a workflow",
+					"routing": {
+						"request": { "method": "GET", "url": "=/workflows/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Delete a workflow",
+					"value": "deleteWorkflowsId",
+					"action": "Deletes a workflow",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/workflows/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Update a workflow",
+					"value": "putWorkflowsId",
+					"action": "Update a workflow",
+					"routing": {
+						"request": { "method": "PUT", "url": "=/workflows/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Activate a workflow",
+					"value": "postWorkflowsIdActivate",
+					"action": "Active a workflow",
+					"routing": {
+						"request": { "method": "POST", "url": "=/workflows/{{ $parameter[\"id\"] }}/activate" }
+					}
+				},
+				{
+					"name": "Deactivate a workflow",
+					"value": "postWorkflowsIdDeactivate",
+					"action": "Deactivate a workflow",
+					"routing": {
+						"request": {
+							"method": "POST",
+							"url": "=/workflows/{{ $parameter[\"id\"] }}/deactivate"
+						}
+					}
+				},
+				{
+					"name": "Transfer a workflow to another project",
+					"value": "putWorkflowsIdTransfer",
+					"action": "Transfer a workflow to another project",
+					"routing": {
+						"request": { "method": "PUT", "url": "=/workflows/{{ $parameter[\"id\"] }}/transfer" }
+					}
+				},
+				{
+					"name": "Transfer a credential to another project",
+					"value": "putCredentialsIdTransfer",
+					"action": "Transfer a credential to another project",
+					"routing": {
+						"request": { "method": "PUT", "url": "=/credentials/{{ $parameter[\"id\"] }}/transfer" }
+					}
+				},
+				{
+					"name": "Get workflow tags",
+					"value": "getWorkflowsIdTags",
+					"action": "Get workflow tags",
+					"routing": {
+						"request": { "method": "GET", "url": "=/workflows/{{ $parameter[\"id\"] }}/tags" }
+					}
+				},
+				{
+					"name": "Update tags of a workflow",
+					"value": "putWorkflowsIdTags",
+					"action": "Update tags of a workflow",
+					"routing": {
+						"request": { "method": "PUT", "url": "=/workflows/{{ $parameter[\"id\"] }}/tags" }
+					}
+				}
+			],
+			"displayOptions": { "show": { "resource": ["workflow"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "getUsers",
+			"options": [
+				{
+					"name": "Retrieve all users",
+					"value": "getUsers",
+					"action": "Retrieve all users from your instance. Only available for the instance owner",
+					"routing": { "request": { "method": "GET", "url": "/users" } }
+				},
+				{
+					"name": "Create multiple users",
+					"value": "postUsers",
+					"action": "Create one or more users",
+					"routing": { "request": { "method": "POST", "url": "/users" } }
+				},
+				{
+					"name": "Get user by ID/Email",
+					"value": "getUsersId",
+					"action": "Retrieve a user from your instance. Only available for the instance owner",
+					"routing": { "request": { "method": "GET", "url": "=/users/{{ $parameter[\"id\"] }}" } }
+				},
+				{
+					"name": "Delete a user",
+					"value": "deleteUsersId",
+					"action": "Delete a user from your instance",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/users/{{ $parameter[\"id\"] }}" }
+					}
+				},
+				{
+					"name": "Change a user's global role",
+					"value": "patchUsersIdRole",
+					"action": "Change a user's global role",
+					"routing": {
+						"request": { "method": "PATCH", "url": "=/users/{{ $parameter[\"id\"] }}/role" }
+					}
+				}
+			],
+			"displayOptions": { "show": { "resource": ["user"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postSourceControlPull",
+			"options": [
+				{
+					"name": "Pull changes from the remote repository",
+					"value": "postSourceControlPull",
+					"action": "Requires the Source Control feature to be licensed and connected to a repository",
+					"routing": { "request": { "method": "POST", "url": "/source-control/pull" } }
+				}
+			],
+			"displayOptions": { "show": { "resource": ["sourceControl"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postVariables",
+			"options": [
+				{
+					"name": "Create a variable",
+					"value": "postVariables",
+					"action": "Create a variable in your instance",
+					"routing": { "request": { "method": "POST", "url": "/variables" } }
+				},
+				{
+					"name": "Retrieve variables",
+					"value": "getVariables",
+					"action": "Retrieve variables from your instance",
+					"routing": { "request": { "method": "GET", "url": "/variables" } }
+				},
+				{
+					"name": "Delete a variable",
+					"value": "deleteVariablesId",
+					"action": "Delete a variable from your instance",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/variables/{{ $parameter[\"id\"] }}" }
+					}
+				}
+			],
+			"displayOptions": { "show": { "resource": ["variable"] } }
+		},
+		{
+			"displayName": "Operation",
+			"name": "operation",
+			"type": "options",
+			"noDataExpression": true,
+			"default": "postProjects",
+			"options": [
+				{
+					"name": "Create a project",
+					"value": "postProjects",
+					"action": "Create a project in your instance",
+					"routing": { "request": { "method": "POST", "url": "/projects" } }
+				},
+				{
+					"name": "Retrieve projects",
+					"value": "getProjects",
+					"action": "Retrieve projects from your instance",
+					"routing": { "request": { "method": "GET", "url": "/projects" } }
+				},
+				{
+					"name": "Delete a project",
+					"value": "deleteProjectsProjectid",
+					"action": "Delete a project from your instance",
+					"routing": {
+						"request": { "method": "DELETE", "url": "=/projects/{{ $parameter[\"projectId\"] }}" }
+					}
+				},
+				{
+					"name": "Update a project",
+					"value": "putProjectsProjectid",
+					"action": "Update a project",
+					"routing": { "request": { "method": "PUT", "url": "/projects/{projectId}" } }
+				}
+			],
+			"displayOptions": { "show": { "resource": ["project"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "additionalOptions",
+					"displayName": "Additional Options",
+					"type": "json",
+					"default": "{}",
+					"routing": { "send": { "type": "body", "property": "additionalOptions" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postAudit"], "resource": ["audit"] } }
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. Joe's Github Credentials",
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["postCredentials"], "resource": ["credential"] } }
+		},
+		{
+			"name": "type",
+			"displayName": "Type",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. github",
+			"routing": { "send": { "type": "body", "property": "type" } },
+			"displayOptions": { "show": { "operation": ["postCredentials"], "resource": ["credential"] } }
+		},
+		{
+			"name": "data",
+			"displayName": "Data",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "data" } },
+			"displayOptions": { "show": { "operation": ["postCredentials"], "resource": ["credential"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. R2DjclaysHbqn778",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "createdAt",
+					"displayName": "Created At",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2022-04-29T11:02:29.842Z",
+					"routing": { "send": { "type": "body", "property": "createdAt" } }
+				},
+				{
+					"name": "updatedAt",
+					"displayName": "Updated At",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2022-04-29T11:02:29.842Z",
+					"routing": { "send": { "type": "body", "property": "updatedAt" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postCredentials"], "resource": ["credential"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The credential ID that needs to be deleted",
+			"displayOptions": {
+				"show": { "operation": ["deleteCredential"], "resource": ["credential"] }
+			}
+		},
+		{
+			"name": "credentialTypeName",
+			"displayName": "Credential Type Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The credential type name that you want to get the schema for",
+			"displayOptions": {
+				"show": {
+					"operation": ["getCredentialsSchemaCredentialtypename"],
+					"resource": ["credential"]
+				}
+			}
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "includeData",
+					"displayName": "Include Data",
+					"type": "boolean",
+					"default": false,
+					"description": "Whether or not to include the execution's detailed data",
+					"routing": { "send": { "type": "query", "property": "includeData" } }
+				},
+				{
+					"name": "status",
+					"displayName": "Status",
+					"type": "options",
+					"default": "error",
+					"description": "Status to filter the executions by",
+					"options": [
+						{ "name": "Error", "value": "error" },
+						{ "name": "Success", "value": "success" },
+						{ "name": "Waiting", "value": "waiting" }
+					],
+					"routing": { "send": { "type": "query", "property": "status" } }
+				},
+				{
+					"name": "workflowId",
+					"displayName": "Workflow ID",
+					"type": "string",
+					"default": "",
+					"description": "Workflow to filter the executions by",
+					"routing": { "send": { "type": "query", "property": "workflowId" } }
+				},
+				{
+					"name": "projectId",
+					"displayName": "Project ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "query", "property": "projectId" } }
+				},
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getExecutions"], "resource": ["execution"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "number",
+			"default": 0,
+			"required": true,
+			"description": "The ID of the execution",
+			"displayOptions": { "show": { "operation": ["getExecutionsId"], "resource": ["execution"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "includeData",
+					"displayName": "Include Data",
+					"type": "boolean",
+					"default": false,
+					"description": "Whether or not to include the execution's detailed data",
+					"routing": { "send": { "type": "query", "property": "includeData" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getExecutionsId"], "resource": ["execution"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "number",
+			"default": 0,
+			"required": true,
+			"description": "The ID of the execution",
+			"displayOptions": {
+				"show": { "operation": ["deleteExecutionsId"], "resource": ["execution"] }
+			}
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. Production",
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["postTags"], "resource": ["tag"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2tUt1wbLX592XDdX",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "createdAt",
+					"displayName": "Created At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "createdAt" } }
+				},
+				{
+					"name": "updatedAt",
+					"displayName": "Updated At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "updatedAt" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postTags"], "resource": ["tag"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getTags"], "resource": ["tag"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the tag",
+			"displayOptions": { "show": { "operation": ["getTagsId"], "resource": ["tag"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the tag",
+			"displayOptions": { "show": { "operation": ["deleteTagsId"], "resource": ["tag"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the tag",
+			"displayOptions": { "show": { "operation": ["putTagsId"], "resource": ["tag"] } }
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. Production",
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["putTagsId"], "resource": ["tag"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2tUt1wbLX592XDdX",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "createdAt",
+					"displayName": "Created At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "createdAt" } }
+				},
+				{
+					"name": "updatedAt",
+					"displayName": "Updated At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "updatedAt" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["putTagsId"], "resource": ["tag"] } }
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. Workflow 1",
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["postWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "nodes",
+			"displayName": "Nodes",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "nodes" } },
+			"displayOptions": { "show": { "operation": ["postWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "connections",
+			"displayName": "Connections",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "connections" } },
+			"displayOptions": { "show": { "operation": ["postWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "settings",
+			"displayName": "Settings",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "settings" } },
+			"displayOptions": { "show": { "operation": ["postWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2tUt1wbLX592XDdX",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "active",
+					"displayName": "Active",
+					"type": "boolean",
+					"default": false,
+					"routing": { "send": { "type": "body", "property": "active" } }
+				},
+				{
+					"name": "createdAt",
+					"displayName": "Created At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "createdAt" } }
+				},
+				{
+					"name": "updatedAt",
+					"displayName": "Updated At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "updatedAt" } }
+				},
+				{
+					"name": "staticData",
+					"displayName": "Static Data",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. {\"lastId\":1}",
+					"routing": { "send": { "type": "body", "property": "staticData" } }
+				},
+				{
+					"name": "tags",
+					"displayName": "Tags",
+					"type": "json",
+					"default": "{}",
+					"routing": { "send": { "type": "body", "property": "tags" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "active",
+					"displayName": "Active",
+					"type": "boolean",
+					"default": false,
+					"routing": { "send": { "type": "query", "property": "active" } }
+				},
+				{
+					"name": "tags",
+					"displayName": "Tags",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "query", "property": "tags" } }
+				},
+				{
+					"name": "name",
+					"displayName": "Name",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "query", "property": "name" } }
+				},
+				{
+					"name": "projectId",
+					"displayName": "Project ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "query", "property": "projectId" } }
+				},
+				{
+					"name": "excludePinnedData",
+					"displayName": "Exclude Pinned Data",
+					"type": "boolean",
+					"default": false,
+					"description": "Set this to avoid retrieving pinned data",
+					"routing": { "send": { "type": "query", "property": "excludePinnedData" } }
+				},
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getWorkflows"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": { "show": { "operation": ["getWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "excludePinnedData",
+					"displayName": "Exclude Pinned Data",
+					"type": "boolean",
+					"default": false,
+					"description": "Set this to avoid retrieving pinned data",
+					"routing": { "send": { "type": "query", "property": "excludePinnedData" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": { "show": { "operation": ["deleteWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. Workflow 1",
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "nodes",
+			"displayName": "Nodes",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "nodes" } },
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "connections",
+			"displayName": "Connections",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "connections" } },
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "settings",
+			"displayName": "Settings",
+			"type": "json",
+			"default": "{}",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "settings" } },
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. 2tUt1wbLX592XDdX",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "active",
+					"displayName": "Active",
+					"type": "boolean",
+					"default": false,
+					"routing": { "send": { "type": "body", "property": "active" } }
+				},
+				{
+					"name": "createdAt",
+					"displayName": "Created At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "createdAt" } }
+				},
+				{
+					"name": "updatedAt",
+					"displayName": "Updated At",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "updatedAt" } }
+				},
+				{
+					"name": "staticData",
+					"displayName": "Static Data",
+					"type": "string",
+					"default": "",
+					"placeholder": "e.g. {\"lastId\":1}",
+					"routing": { "send": { "type": "body", "property": "staticData" } }
+				},
+				{
+					"name": "tags",
+					"displayName": "Tags",
+					"type": "json",
+					"default": "{}",
+					"routing": { "send": { "type": "body", "property": "tags" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["putWorkflowsId"], "resource": ["workflow"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": {
+				"show": { "operation": ["postWorkflowsIdActivate"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": {
+				"show": { "operation": ["postWorkflowsIdDeactivate"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": {
+				"show": { "operation": ["putWorkflowsIdTransfer"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "destinationProjectId",
+			"displayName": "Destination Project ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the project to transfer the workflow to",
+			"routing": { "send": { "type": "body", "property": "destinationProjectId" } },
+			"displayOptions": {
+				"show": { "operation": ["putWorkflowsIdTransfer"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the credential",
+			"displayOptions": {
+				"show": { "operation": ["putCredentialsIdTransfer"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "destinationProjectId",
+			"displayName": "Destination Project ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the project to transfer the credential to",
+			"routing": { "send": { "type": "body", "property": "destinationProjectId" } },
+			"displayOptions": {
+				"show": { "operation": ["putCredentialsIdTransfer"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": {
+				"show": { "operation": ["getWorkflowsIdTags"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the workflow",
+			"displayOptions": {
+				"show": { "operation": ["putWorkflowsIdTags"], "resource": ["workflow"] }
+			}
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				},
+				{
+					"name": "includeRole",
+					"displayName": "Include Role",
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to include the user's role or not",
+					"routing": { "send": { "type": "query", "property": "includeRole" } }
+				},
+				{
+					"name": "projectId",
+					"displayName": "Project ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "query", "property": "projectId" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getUsers"], "resource": ["user"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID or email of the user",
+			"displayOptions": { "show": { "operation": ["getUsersId"], "resource": ["user"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "includeRole",
+					"displayName": "Include Role",
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to include the user's role or not",
+					"routing": { "send": { "type": "query", "property": "includeRole" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getUsersId"], "resource": ["user"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID or email of the user",
+			"displayOptions": { "show": { "operation": ["deleteUsersId"], "resource": ["user"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID or email of the user",
+			"displayOptions": { "show": { "operation": ["patchUsersIdRole"], "resource": ["user"] } }
+		},
+		{
+			"name": "newRoleName",
+			"displayName": "New Role Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "newRoleName" } },
+			"displayOptions": { "show": { "operation": ["patchUsersIdRole"], "resource": ["user"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "force",
+					"displayName": "Force",
+					"type": "boolean",
+					"default": false,
+					"routing": { "send": { "type": "body", "property": "force" } }
+				},
+				{
+					"name": "variables",
+					"displayName": "Variables",
+					"type": "json",
+					"default": "{}",
+					"routing": { "send": { "type": "body", "property": "variables" } }
+				}
+			],
+			"displayOptions": {
+				"show": { "operation": ["postSourceControlPull"], "resource": ["sourceControl"] }
+			}
+		},
+		{
+			"name": "key",
+			"displayName": "Key",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "key" } },
+			"displayOptions": { "show": { "operation": ["postVariables"], "resource": ["variable"] } }
+		},
+		{
+			"name": "value",
+			"displayName": "Value",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"placeholder": "e.g. test",
+			"routing": { "send": { "type": "body", "property": "value" } },
+			"displayOptions": { "show": { "operation": ["postVariables"], "resource": ["variable"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "type",
+					"displayName": "Type",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "type" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postVariables"], "resource": ["variable"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getVariables"], "resource": ["variable"] } }
+		},
+		{
+			"name": "id",
+			"displayName": "ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the variable",
+			"displayOptions": { "show": { "operation": ["deleteVariablesId"], "resource": ["variable"] } }
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": { "show": { "operation": ["postProjects"], "resource": ["project"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "type",
+					"displayName": "Type",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "type" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["postProjects"], "resource": ["project"] } }
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "limit",
+					"displayName": "Limit",
+					"type": "number",
+					"default": 100,
+					"description": "The maximum number of items to return",
+					"routing": { "send": { "type": "query", "property": "limit" } }
+				},
+				{
+					"name": "cursor",
+					"displayName": "Cursor",
+					"type": "string",
+					"default": "",
+					"description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+					"routing": { "send": { "type": "query", "property": "cursor" } }
+				}
+			],
+			"displayOptions": { "show": { "operation": ["getProjects"], "resource": ["project"] } }
+		},
+		{
+			"name": "projectId",
+			"displayName": "Project ID",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"description": "The ID of the project",
+			"displayOptions": {
+				"show": { "operation": ["deleteProjectsProjectid"], "resource": ["project"] }
+			}
+		},
+		{
+			"name": "name",
+			"displayName": "Name",
+			"type": "string",
+			"default": "",
+			"required": true,
+			"routing": { "send": { "type": "body", "property": "name" } },
+			"displayOptions": {
+				"show": { "operation": ["putProjectsProjectid"], "resource": ["project"] }
+			}
+		},
+		{
+			"displayName": "Additional Options",
+			"name": "additionalOptions",
+			"type": "collection",
+			"placeholder": "Add Option",
+			"default": {},
+			"options": [
+				{
+					"name": "id",
+					"displayName": "ID",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "id" } }
+				},
+				{
+					"name": "type",
+					"displayName": "Type",
+					"type": "string",
+					"default": "",
+					"routing": { "send": { "type": "body", "property": "type" } }
+				}
+			],
+			"displayOptions": {
+				"show": { "operation": ["putProjectsProjectid"], "resource": ["project"] }
+			}
+		}
+	]
+}

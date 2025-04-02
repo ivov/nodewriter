@@ -1,0 +1,167 @@
+exports.HackerNews = class HackerNews {
+	description = {
+		displayName: 'Hacker News',
+		name: 'hackerNews',
+		group: ['transform'],
+		version: 1,
+		subtitle: '={{ $parameter["operation"] }}',
+		description: '',
+		defaults: {
+			name: 'Hacker News',
+		},
+		inputs: ['main'],
+		outputs: ['main'],
+		requestDefaults: {
+			baseURL: 'https://hacker-news.firebaseio.com/v0',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			returnFullResponse: true,
+		},
+		properties: [
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				default: 'getItem',
+				options: [
+					{
+						name: 'Retrieve an item from the API',
+						value: 'getItem',
+						action: 'Retrieve an item from the API',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '=/item/{{ $parameter["id"] }}.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve a user from the API',
+						value: 'getUser',
+						action: 'Retrieve a user from the API',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '=/user/{{ $parameter["id"] }}.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve the current largest item id',
+						value: 'getMaxItem',
+						action: 'Retrieve the current largest item id',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/maxitem.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type topstories',
+						value: 'topstories.json',
+						action: 'Retrieve top 500 entries of story type topstories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/topstories.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type newstories',
+						value: 'newstories.json',
+						action: 'Retrieve top 500 entries of story type newstories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/newstories.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type beststories',
+						value: 'beststories.json',
+						action: 'Retrieve top 500 entries of story type beststories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/beststories.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type askstories',
+						value: 'askstories.json',
+						action: 'Retrieve top 500 entries of story type askstories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/askstories.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type showstories',
+						value: 'showstories.json',
+						action: 'Retrieve top 500 entries of story type showstories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/showstories.json',
+							},
+						},
+					},
+					{
+						name: 'Retrieve top 500 entries of story type jobstories',
+						value: 'jobstories.json',
+						action: 'Retrieve top 500 entries of story type jobstories',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/jobstories.json',
+							},
+						},
+					},
+					{
+						name: 'Get a list of updates to items and profiles',
+						value: 'updates',
+						action: 'Get a list of updates to items and profiles',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/updates.json',
+							},
+						},
+					},
+				],
+			},
+			{
+				displayName: 'ID',
+				name: 'id',
+				type: 'string',
+				default: '',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: ['getItem'],
+					},
+				},
+			},
+			{
+				displayName: 'ID',
+				name: 'id',
+				type: 'string',
+				default: '',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: ['getUser'],
+					},
+				},
+			},
+		],
+	};
+};

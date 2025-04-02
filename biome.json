@@ -1,0 +1,15 @@
+{
+	"files": {
+		"include": ["**/*.ts", "*.json", "*.md"],
+		"ignore": [
+			"sample-inputs",
+			"sample-outputs",
+			"__fixtures__",
+			"__snapshots__",
+			"package.json"
+		]
+	},
+	"linter": {
+		"enabled": false
+	}
+}

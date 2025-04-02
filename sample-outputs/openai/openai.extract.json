@@ -1,0 +1,1408 @@
+{
+  "descriptors": {
+    "name": "OpenAI",
+    "description": "APIs for sampling from and fine-tuning language models",
+    "baseUrl": "https://api.openai.com/v1",
+    "specVersion": "1.2.0",
+    "openApiVersion": "3.0.0",
+    "nodeTypeClassName": "OpenAi",
+    "auth": [],
+    "docsUrl": "https://docs.n8n.io/integrations/creating-nodes/",
+    "resources": [
+      "OpenAI"
+    ]
+  },
+  "operations": {
+    "createAnswer": {
+      "displayName": "Answers the specified question using the provided documents and examples.  The endpoint first [searches](/docs/api-refer...",
+      "description": "Answers the specified question using the provided documents and examples.  The endpoint first [searches](/docs/api-refer...",
+      "method": "post",
+      "endpoint": "/answers",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "documents",
+          "location": "body",
+          "required": false,
+          "description": "List of documents from which the answer for the input `question` should be derived. If this is an empty list, the questi...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "examples",
+          "location": "body",
+          "required": true,
+          "description": "List of (question, answer) pairs that will help steer the model towards the tone and answer format you'd like. We recomm...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "examples_context",
+          "location": "body",
+          "required": true,
+          "description": "A text snippet containing the contextual information used to generate the answers for the `examples` you provide",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Ottawa, Canada's capital, is located in the east of southern Ontario, near the city of Montréal and the U.S. border."
+        },
+        {
+          "name": "expand",
+          "location": "body",
+          "required": false,
+          "description": "If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object I...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "file",
+          "location": "body",
+          "required": false,
+          "description": "The ID of an uploaded file that contains documents to search over. See [upload file](/docs/api-reference/files/upload) f...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "logit_bias",
+          "location": "body",
+          "required": false,
+          "description": "Modify the likelihood of specified tokens appearing in the completion.  Accepts a json object that maps tokens (specifie...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "logprobs",
+          "location": "body",
+          "required": false,
+          "description": "Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "max_rerank",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of documents to be ranked by [Search](/docs/api-reference/searches/create) when using `file`. Setting...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "max_tokens",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of tokens allowed for the generated answer",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use for completion. You can select one of `ada`, `babbage`, `curie`, or `davinci`",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "How many answers to generate for each question",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "question",
+          "location": "body",
+          "required": true,
+          "description": "Question to get answered",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. What is the capital of Japan?"
+        },
+        {
+          "name": "return_metadata",
+          "location": "body",
+          "required": false,
+          "description": "A special boolean flag for showing metadata. If set to `true`, each document entry in the returned JSON will contain a \"...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "return_prompt",
+          "location": "body",
+          "required": false,
+          "description": "If set to `true`, the returned JSON will include a \"prompt\" field containing the final prompt that was used to request a...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "search_model",
+          "location": "body",
+          "required": false,
+          "description": "ID of the model to use for [Search](/docs/api-reference/searches/create). You can select one of `ada`, `babbage`, `curie...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "stop",
+          "location": "body",
+          "required": false,
+          "description": "Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequenc...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. \n"
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "createTranscription": {
+      "displayName": "Transcribes audio into the input language",
+      "description": "Transcribes audio into the input language",
+      "method": "post",
+      "endpoint": "/audio/transcriptions",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file",
+          "location": "body",
+          "required": true,
+          "description": "The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "language",
+          "location": "body",
+          "required": false,
+          "description": "The language of the input audio. Supplying the input language in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_6...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. Only `whisper-1` is currently available",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "prompt",
+          "location": "body",
+          "required": false,
+          "description": "An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-te...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "response_format",
+          "location": "body",
+          "required": false,
+          "description": "The format of the transcript output, in one of these options: json, text, srt, verbose_json, or vtt",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values l...",
+          "type": "number",
+          "default": 0
+        }
+      ],
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    },
+    "createTranslation": {
+      "displayName": "Translates audio into into English",
+      "description": "Translates audio into into English",
+      "method": "post",
+      "endpoint": "/audio/translations",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file",
+          "location": "body",
+          "required": true,
+          "description": "The audio file to translate, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. Only `whisper-1` is currently available",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "prompt",
+          "location": "body",
+          "required": false,
+          "description": "An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-te...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "response_format",
+          "location": "body",
+          "required": false,
+          "description": "The format of the transcript output, in one of these options: json, text, srt, verbose_json, or vtt",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values l...",
+          "type": "number",
+          "default": 0
+        }
+      ],
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    },
+    "createChatCompletion": {
+      "displayName": "Creates a completion for the chat message",
+      "description": "Creates a completion for the chat message",
+      "method": "post",
+      "endpoint": "/chat/completions",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "frequency_penalty",
+          "location": "body",
+          "required": false,
+          "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, d...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "logit_bias",
+          "location": "body",
+          "required": false,
+          "description": "Modify the likelihood of specified tokens appearing in the completion.  Accepts a json object that maps tokens (specifie...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "max_tokens",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return wil...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "messages",
+          "location": "body",
+          "required": true,
+          "description": "The messages to generate chat completions for, in the [chat format](/docs/guides/chat/introduction)",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. Currently, only `gpt-3.5-turbo` and `gpt-3.5-turbo-0301` are supported",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "How many chat completion choices to generate for each input message",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "presence_penalty",
+          "location": "body",
+          "required": false,
+          "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increa...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "stop",
+          "location": "body",
+          "required": false,
+          "description": "Up to 4 sequences where the API will stop generating further tokens",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "stream",
+          "location": "body",
+          "required": false,
+          "description": "If set, partial message deltas will be sent, like in ChatGPT. Tokens will be sent as data-only [server-sent events](http...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "top_p",
+          "location": "body",
+          "required": false,
+          "description": "An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the token...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "createClassification": {
+      "displayName": "Classifies the specified `query` using provided examples.  The endpoint first [searches](/docs/api-reference/searches) o...",
+      "description": "Classifies the specified `query` using provided examples.  The endpoint first [searches](/docs/api-reference/searches) o...",
+      "method": "post",
+      "endpoint": "/classifications",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "examples",
+          "location": "body",
+          "required": false,
+          "description": "A list of examples with labels, in the following format:  `[[\"The movie is so interesting.\", \"Positive\"], [\"It is quite ...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "expand",
+          "location": "body",
+          "required": false,
+          "description": "If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object I...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "file",
+          "location": "body",
+          "required": false,
+          "description": "The ID of the uploaded file that contains training examples. See [upload file](/docs/api-reference/files/upload) for how...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "labels",
+          "location": "body",
+          "required": false,
+          "description": "The set of categories being classified. If not specified, candidate labels will be automatically collected from the exam...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "logit_bias",
+          "location": "body",
+          "required": false,
+          "description": "Modify the likelihood of specified tokens appearing in the completion.  Accepts a json object that maps tokens (specifie...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "logprobs",
+          "location": "body",
+          "required": false,
+          "description": "Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "max_examples",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of examples to be ranked by [Search](/docs/api-reference/searches/create) when using `file`. Setting ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available ...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "query",
+          "location": "body",
+          "required": true,
+          "description": "Query to be classified",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. The plot is not very attractive."
+        },
+        {
+          "name": "return_metadata",
+          "location": "body",
+          "required": false,
+          "description": "A special boolean flag for showing metadata. If set to `true`, each document entry in the returned JSON will contain a \"...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "return_prompt",
+          "location": "body",
+          "required": false,
+          "description": "If set to `true`, the returned JSON will include a \"prompt\" field containing the final prompt that was used to request a...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "search_model",
+          "location": "body",
+          "required": false,
+          "description": "ID of the model to use for [Search](/docs/api-reference/searches/create). You can select one of `ada`, `babbage`, `curie...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "createCompletion": {
+      "displayName": "Creates a completion for the provided prompt and parameters",
+      "description": "Creates a completion for the provided prompt and parameters",
+      "method": "post",
+      "endpoint": "/completions",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "best_of",
+          "location": "body",
+          "required": false,
+          "description": "Generates `best_of` completions server-side and returns the \"best\" (the one with the highest log probability per token)....",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "echo",
+          "location": "body",
+          "required": false,
+          "description": "Echo back the prompt in addition to the completion",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "frequency_penalty",
+          "location": "body",
+          "required": false,
+          "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, d...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "logit_bias",
+          "location": "body",
+          "required": false,
+          "description": "Modify the likelihood of specified tokens appearing in the completion.  Accepts a json object that maps tokens (specifie...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "logprobs",
+          "location": "body",
+          "required": false,
+          "description": "Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "max_tokens",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of [tokens](/tokenizer) to generate in the completion.  The token count of your prompt plus `max_toke...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available ...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "How many completions to generate for each prompt.  **Note:** Because this parameter generates many completions, it can q...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "presence_penalty",
+          "location": "body",
+          "required": false,
+          "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increa...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "prompt",
+          "location": "body",
+          "required": false,
+          "description": "The prompt(s) to generate completions for, encoded as a string, array of strings, array of tokens, or array of token arr...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. This is a test."
+        },
+        {
+          "name": "stop",
+          "location": "body",
+          "required": false,
+          "description": "Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequenc...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. \n"
+        },
+        {
+          "name": "stream",
+          "location": "body",
+          "required": false,
+          "description": "Whether to stream back partial progress. If set, tokens will be sent as data-only [server-sent events](https://developer...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "suffix",
+          "location": "body",
+          "required": false,
+          "description": "The suffix that comes after a completion of inserted text",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. test."
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "top_p",
+          "location": "body",
+          "required": false,
+          "description": "An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the token...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "createEdit": {
+      "displayName": "Creates a new edit for the provided input, instruction, and parameters",
+      "description": "Creates a new edit for the provided input, instruction, and parameters",
+      "method": "post",
+      "endpoint": "/edits",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "input",
+          "location": "body",
+          "required": false,
+          "description": "The input text to use as a starting point for the edit",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. What day of the wek is it?"
+        },
+        {
+          "name": "instruction",
+          "location": "body",
+          "required": true,
+          "description": "The instruction that tells the model how to edit the prompt",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Fix the spelling mistakes."
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. You can use the `text-davinci-edit-001` or `code-davinci-edit-001` model with this endpoint",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "How many edits to generate for the input and instruction",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "temperature",
+          "location": "body",
+          "required": false,
+          "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "top_p",
+          "location": "body",
+          "required": false,
+          "description": "An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the token...",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "createEmbedding": {
+      "displayName": "Creates an embedding vector representing the input text",
+      "description": "Creates an embedding vector representing the input text",
+      "method": "post",
+      "endpoint": "/embeddings",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "input",
+          "location": "body",
+          "required": true,
+          "description": "Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a sin...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. This is a test."
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": true,
+          "description": "ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available ...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "listEngines": {
+      "displayName": "Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner an...",
+      "description": "Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner an...",
+      "method": "get",
+      "endpoint": "/engines",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": []
+    },
+    "retrieveEngine": {
+      "displayName": "Retrieves a model instance, providing basic information about it such as the owner and availability",
+      "description": "Retrieves a model instance, providing basic information about it such as the owner and availability",
+      "method": "get",
+      "endpoint": "/engines/{engine_id}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "engine_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the engine to use for this request",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "createSearch": {
+      "displayName": "The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to...",
+      "description": "The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to...",
+      "method": "post",
+      "endpoint": "/engines/{engine_id}/search",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "engine_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the engine to use for this request.  You can select one of `ada`, `babbage`, `curie`, or `davinci`",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "documents",
+          "location": "body",
+          "required": false,
+          "description": "Up to 200 documents to search over, provided as a list of strings.  The maximum document length (in tokens) is 2034 minu...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "file",
+          "location": "body",
+          "required": false,
+          "description": "The ID of an uploaded file that contains documents to search over.  You should specify either `documents` or a `file`, b...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "max_rerank",
+          "location": "body",
+          "required": false,
+          "description": "The maximum number of documents to be re-ranked and returned by search.  This flag only takes effect when `file` is set",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "query",
+          "location": "body",
+          "required": true,
+          "description": "Query to search against the documents",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. the president"
+        },
+        {
+          "name": "return_metadata",
+          "location": "body",
+          "required": false,
+          "description": "A special boolean flag for showing metadata. If set to `true`, each document entry in the returned JSON will contain a \"...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "listFiles": {
+      "displayName": "Returns a list of files that belong to the user's organization",
+      "description": "Returns a list of files that belong to the user's organization",
+      "method": "get",
+      "endpoint": "/files",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": []
+    },
+    "createFile": {
+      "displayName": "Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the fil...",
+      "description": "Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the fil...",
+      "method": "post",
+      "endpoint": "/files",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file",
+          "location": "body",
+          "required": true,
+          "description": "Name of the [JSON Lines](https://jsonlines.readthedocs.io/en/latest/) file to be uploaded.  If the `purpose` is set to \"...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "purpose",
+          "location": "body",
+          "required": true,
+          "description": "The intended purpose of the uploaded documents.  Use \"fine-tune\" for [Fine-tuning](/docs/api-reference/fine-tunes). This...",
+          "type": "string",
+          "default": ""
+        }
+      ],
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    },
+    "deleteFile": {
+      "displayName": "Delete a file",
+      "description": "Delete a file",
+      "method": "delete",
+      "endpoint": "/files/{file_id}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the file to use for this request",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "retrieveFile": {
+      "displayName": "Returns information about a specific file",
+      "description": "Returns information about a specific file",
+      "method": "get",
+      "endpoint": "/files/{file_id}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the file to use for this request",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "downloadFile": {
+      "displayName": "Returns the contents of the specified file",
+      "description": "Returns the contents of the specified file",
+      "method": "get",
+      "endpoint": "/files/{file_id}/content",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "file_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the file to use for this request",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "listFineTunes": {
+      "displayName": "List your organization's fine-tuning jobs",
+      "description": "List your organization's fine-tuning jobs",
+      "method": "get",
+      "endpoint": "/fine-tunes",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": []
+    },
+    "createFineTune": {
+      "displayName": "Creates a job that fine-tunes a specified model from a given dataset.  Response includes details of the enqueued job inc...",
+      "description": "Creates a job that fine-tunes a specified model from a given dataset.  Response includes details of the enqueued job inc...",
+      "method": "post",
+      "endpoint": "/fine-tunes",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "batch_size",
+          "location": "body",
+          "required": false,
+          "description": "The batch size to use for training. The batch size is the number of training examples used to train a single forward and...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "classification_betas",
+          "location": "body",
+          "required": false,
+          "description": "If this is provided, we calculate F-beta scores at the specified beta values. The F-beta score is a generalization of F-...",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "classification_n_classes",
+          "location": "body",
+          "required": false,
+          "description": "The number of classes in a classification task.  This parameter is required for multiclass classification",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "classification_positive_class",
+          "location": "body",
+          "required": false,
+          "description": "The positive class in binary classification.  This parameter is needed to generate precision, recall, and F1 metrics whe...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "compute_classification_metrics",
+          "location": "body",
+          "required": false,
+          "description": "If set, we calculate classification-specific metrics such as accuracy and F-1 score using the validation set at the end ...",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "learning_rate_multiplier",
+          "location": "body",
+          "required": false,
+          "description": "The learning rate multiplier to use for training. The fine-tuning learning rate is the original learning rate used for p...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": false,
+          "description": "The name of the base model to fine-tune. You can select one of \"ada\", \"babbage\", \"curie\", \"davinci\", or a fine-tuned mod...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n_epochs",
+          "location": "body",
+          "required": false,
+          "description": "The number of epochs to train the model for. An epoch refers to one full cycle through the training dataset",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "prompt_loss_weight",
+          "location": "body",
+          "required": false,
+          "description": "The weight to use for loss on the prompt tokens. This controls how much the model tries to learn to generate the prompt ...",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "suffix",
+          "location": "body",
+          "required": false,
+          "description": "A string of up to 40 characters that will be added to your fine-tuned model name.  For example, a `suffix` of \"custom-mo...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "training_file",
+          "location": "body",
+          "required": true,
+          "description": "The ID of an uploaded file that contains training data.  See [upload file](/docs/api-reference/files/upload) for how to ...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. file-ajSREls59WBbvgSzJSVWxMCB"
+        },
+        {
+          "name": "validation_file",
+          "location": "body",
+          "required": false,
+          "description": "The ID of an uploaded file that contains validation data.  If you provide this file, the data is used to generate valida...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. file-XjSREls59WBbvgSzJSVWxMCa"
+        }
+      ]
+    },
+    "retrieveFineTune": {
+      "displayName": "Gets info about the fine-tune job.  [Learn more about Fine-tuning](/docs/guides/fine-tuning)",
+      "description": "Gets info about the fine-tune job.  [Learn more about Fine-tuning](/docs/guides/fine-tuning)",
+      "method": "get",
+      "endpoint": "/fine-tunes/{fine_tune_id}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "fine_tune_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the fine-tune job",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "cancelFineTune": {
+      "displayName": "Immediately cancel a fine-tune job.",
+      "description": "Immediately cancel a fine-tune job.",
+      "method": "post",
+      "endpoint": "/fine-tunes/{fine_tune_id}/cancel",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "fine_tune_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the fine-tune job to cancel",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "listFineTuneEvents": {
+      "displayName": "Get fine-grained status updates for a fine-tune job.",
+      "description": "Get fine-grained status updates for a fine-tune job.",
+      "method": "get",
+      "endpoint": "/fine-tunes/{fine_tune_id}/events",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "fine_tune_id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the fine-tune job to get events for.",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "stream",
+          "location": "query",
+          "required": false,
+          "description": "Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only [server-sent events](ht...",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "createImageEdit": {
+      "displayName": "Creates an edited or extended image given an original image and a prompt",
+      "description": "Creates an edited or extended image given an original image and a prompt",
+      "method": "post",
+      "endpoint": "/images/edits",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "image",
+          "location": "body",
+          "required": true,
+          "description": "The image to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, image must have transpa...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "mask",
+          "location": "body",
+          "required": false,
+          "description": "An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where `image` should be edited. Mu...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "The number of images to generate. Must be between 1 and 10",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "prompt",
+          "location": "body",
+          "required": true,
+          "description": "A text description of the desired image(s). The maximum length is 1000 characters",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. A cute baby sea otter wearing a beret"
+        },
+        {
+          "name": "response_format",
+          "location": "body",
+          "required": false,
+          "description": "The format in which the generated images are returned. Must be one of `url` or `b64_json`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. url"
+        },
+        {
+          "name": "size",
+          "location": "body",
+          "required": false,
+          "description": "The size of the generated images. Must be one of `256x256`, `512x512`, or `1024x1024`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1024x1024"
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ],
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    },
+    "createImage": {
+      "displayName": "Creates an image given a prompt",
+      "description": "Creates an image given a prompt",
+      "method": "post",
+      "endpoint": "/images/generations",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "The number of images to generate. Must be between 1 and 10",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "prompt",
+          "location": "body",
+          "required": true,
+          "description": "A text description of the desired image(s). The maximum length is 1000 characters",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. A cute baby sea otter"
+        },
+        {
+          "name": "response_format",
+          "location": "body",
+          "required": false,
+          "description": "The format in which the generated images are returned. Must be one of `url` or `b64_json`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. url"
+        },
+        {
+          "name": "size",
+          "location": "body",
+          "required": false,
+          "description": "The size of the generated images. Must be one of `256x256`, `512x512`, or `1024x1024`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1024x1024"
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ]
+    },
+    "createImageVariation": {
+      "displayName": "Creates a variation of a given image",
+      "description": "Creates a variation of a given image",
+      "method": "post",
+      "endpoint": "/images/variations",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "image",
+          "location": "body",
+          "required": true,
+          "description": "The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "n",
+          "location": "body",
+          "required": false,
+          "description": "The number of images to generate. Must be between 1 and 10",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "response_format",
+          "location": "body",
+          "required": false,
+          "description": "The format in which the generated images are returned. Must be one of `url` or `b64_json`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. url"
+        },
+        {
+          "name": "size",
+          "location": "body",
+          "required": false,
+          "description": "The size of the generated images. Must be one of `256x256`, `512x512`, or `1024x1024`",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 1024x1024"
+        },
+        {
+          "name": "user",
+          "location": "body",
+          "required": false,
+          "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/gu...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. user-1234"
+        }
+      ],
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    },
+    "listModels": {
+      "displayName": "Lists the currently available models, and provides basic information about each one such as the owner and availability",
+      "description": "Lists the currently available models, and provides basic information about each one such as the owner and availability",
+      "method": "get",
+      "endpoint": "/models",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": []
+    },
+    "deleteModel": {
+      "displayName": "Delete a fine-tuned model. You must have the Owner role in your organization",
+      "description": "Delete a fine-tuned model. You must have the Owner role in your organization",
+      "method": "delete",
+      "endpoint": "/models/{model}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "model",
+          "location": "path",
+          "required": true,
+          "description": "The model to delete",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "retrieveModel": {
+      "displayName": "Retrieves a model instance, providing basic information about the model such as the owner and permissioning",
+      "description": "Retrieves a model instance, providing basic information about the model such as the owner and permissioning",
+      "method": "get",
+      "endpoint": "/models/{model}",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "model",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the model to use for this request",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "createModeration": {
+      "displayName": "Classifies if text violates OpenAI's Content Policy",
+      "description": "Classifies if text violates OpenAI's Content Policy",
+      "method": "post",
+      "endpoint": "/moderations",
+      "tags": [
+        "OpenAI"
+      ],
+      "params": [
+        {
+          "name": "input",
+          "location": "body",
+          "required": true,
+          "description": "The input text to classify",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. I want to kill them."
+        },
+        {
+          "name": "model",
+          "location": "body",
+          "required": false,
+          "description": "Two content moderations models are available: `text-moderation-stable` and `text-moderation-latest`.  The default is `te...",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. text-moderation-stable"
+        }
+      ]
+    }
+  }
+}

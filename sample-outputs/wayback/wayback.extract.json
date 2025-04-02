@@ -1,0 +1,161 @@
+{
+  "descriptors": {
+    "name": "Wayback",
+    "description": "API for Internet Archive's Wayback Machine",
+    "baseUrl": "https://api.archive.org",
+    "specVersion": "1.0.0",
+    "openApiVersion": "3.0.0",
+    "nodeTypeClassName": "Wayback",
+    "auth": [],
+    "docsUrl": "https://docs.n8n.io/integrations/creating-nodes/",
+    "resources": [
+      "miscellaneous"
+    ]
+  },
+  "operations": {
+    "getWaybackV1Available": {
+      "displayName": "GET /wayback/v1/available",
+      "description": "GET /wayback/v1/available",
+      "method": "get",
+      "endpoint": "/wayback/v1/available",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": [
+        {
+          "name": "url",
+          "location": "query",
+          "required": true,
+          "description": "A single URL to query",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "timestamp",
+          "location": "query",
+          "required": false,
+          "description": "Timestamp requested in ISO 8601 format. The following formats are acceptable:  - YYYY  - YYYY-MM  - YYYY-MM-DD  - YYYY-M...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "callback",
+          "location": "query",
+          "required": false,
+          "description": "Specifies a JavaScript function func, for a JSON-P response. When provided, results are wrapped as `callback(data)`, and...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "timeout",
+          "location": "query",
+          "required": false,
+          "description": "Timeout is the maximum number of seconds to wait for the availability API to get its underlying results from the CDX ser...",
+          "type": "number",
+          "default": 5
+        },
+        {
+          "name": "closest",
+          "location": "query",
+          "required": false,
+          "description": "The direction specifies whether to match archived timestamps that are before the provided one, after, or the default eit...",
+          "type": "options",
+          "default": "either",
+          "options": [
+            "either",
+            "before",
+            "after"
+          ]
+        },
+        {
+          "name": "status_code",
+          "location": "query",
+          "required": false,
+          "description": "HTTP status codes to filter by. Only results with these codes will be returned",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "tag",
+          "location": "query",
+          "required": false,
+          "description": "The optional tag can have any value, and is returned with the results; it can be used to help collate input and output v...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postWaybackV1Available": {
+      "displayName": "POST /wayback/v1/available",
+      "description": "POST /wayback/v1/available",
+      "method": "post",
+      "endpoint": "/wayback/v1/available",
+      "tags": [
+        "miscellaneous"
+      ],
+      "params": [
+        {
+          "name": "url",
+          "location": "query",
+          "required": true,
+          "description": "A single URL to query",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "timestamp",
+          "location": "query",
+          "required": false,
+          "description": "Timestamp requested in ISO 8601 format. The following formats are acceptable:  - YYYY  - YYYY-MM  - YYYY-MM-DD  - YYYY-M...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "callback",
+          "location": "query",
+          "required": false,
+          "description": "Specifies a JavaScript function func, for a JSON-P response. When provided, results are wrapped as `callback(data)`, and...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "timeout",
+          "location": "query",
+          "required": false,
+          "description": "Timeout is the maximum number of seconds to wait for the availability API to get its underlying results from the CDX ser...",
+          "type": "number",
+          "default": 5
+        },
+        {
+          "name": "closest",
+          "location": "query",
+          "required": false,
+          "description": "The direction specifies whether to match archived timestamps that are before the provided one, after, or the default eit...",
+          "type": "options",
+          "default": "either",
+          "options": [
+            "either",
+            "before",
+            "after"
+          ]
+        },
+        {
+          "name": "status_code",
+          "location": "query",
+          "required": false,
+          "description": "HTTP status codes to filter by. Only results with these codes will be returned",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "tag",
+          "location": "query",
+          "required": false,
+          "description": "The optional tag can have any value, and is returned with the results; it can be used to help collate input and output v...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    }
+  }
+}

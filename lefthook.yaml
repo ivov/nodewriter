@@ -1,0 +1,4 @@
+pre-commit:
+  commands:
+    diff-samples:
+      run: bash ./scripts/diff-samples.sh

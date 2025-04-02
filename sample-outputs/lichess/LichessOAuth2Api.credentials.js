@@ -1,0 +1,57 @@
+exports.LichessOAuth2Api = class LichessOAuth2Api {
+	name = 'lichessOAuth2Api';
+	extends = ['oAuth2Api'];
+	displayName = 'Lichess OAuth2 API';
+	documentationUrl = 'https://docs.n8n.io/integrations/creating-nodes/';
+	properties = [
+		{
+			displayName: 'Grant Type',
+			name: 'grantType',
+			type: 'hidden',
+			default: 'authorizationCode',
+		},
+		{
+			displayName: 'Authorization URL',
+			name: 'authUrl',
+			type: 'hidden',
+			default: 'https://lichess.org/oauth',
+			required: true,
+		},
+		{
+			displayName: 'Access Token URL',
+			name: 'accessTokenUrl',
+			type: 'hidden',
+			default: 'https://lichess.org/api/token',
+			required: true,
+		},
+		{
+			displayName: 'Scope',
+			name: 'scope',
+			type: 'hidden',
+			default: [
+				'preference:read',
+				'preference:write',
+				'email:read',
+				'engine:read',
+				'engine:write',
+				'challenge:read',
+				'challenge:write',
+				'challenge:bulk',
+				'study:read',
+				'study:write',
+				'tournament:write',
+				'racer:write',
+				'puzzle:read',
+				'team:read',
+				'team:write',
+				'team:lead',
+				'follow:read',
+				'follow:write',
+				'msg:write',
+				'board:play',
+				'bot:play',
+				'web:mod',
+			].join(' '),
+		},
+	];
+};

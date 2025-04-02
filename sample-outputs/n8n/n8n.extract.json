@@ -1,0 +1,1223 @@
+{
+  "descriptors": {
+    "name": "n8n",
+    "description": "n8n Public API",
+    "baseUrl": "/api/v1",
+    "specVersion": "1.1.1",
+    "openApiVersion": "3.0.0",
+    "nodeTypeClassName": "N8n",
+    "auth": [
+      {
+        "type": "api-key:header",
+        "headerName": "X-N8N-API-KEY",
+        "credTypeClassName": "N8nApi"
+      }
+    ],
+    "docsUrl": "https://docs.n8n.io/api/",
+    "resources": [
+      "Audit",
+      "Credential",
+      "Execution",
+      "Tag",
+      "Workflow",
+      "User",
+      "SourceControl",
+      "Variable",
+      "Project"
+    ]
+  },
+  "operations": {
+    "postAudit": {
+      "displayName": "Generate an audit",
+      "description": "Generate a security audit for your n8n instance",
+      "method": "post",
+      "endpoint": "/audit",
+      "tags": [
+        "Audit"
+      ],
+      "params": [
+        {
+          "name": "additionalOptions",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "postCredentials": {
+      "displayName": "Create a credential",
+      "description": "Creates a credential that can be used by nodes of the specified type",
+      "method": "post",
+      "endpoint": "/credentials",
+      "tags": [
+        "Credential"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. R2DjclaysHbqn778"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Joe's Github Credentials"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. github"
+        },
+        {
+          "name": "data",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "createdAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2022-04-29T11:02:29.842Z"
+        },
+        {
+          "name": "updatedAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2022-04-29T11:02:29.842Z"
+        }
+      ]
+    },
+    "deleteCredential": {
+      "displayName": "Delete credential by ID",
+      "description": "Deletes a credential from your instance. You must be the owner of the credentials",
+      "method": "delete",
+      "endpoint": "/credentials/{id}",
+      "tags": [
+        "Credential"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The credential ID that needs to be deleted",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getCredentialsSchemaCredentialtypename": {
+      "displayName": "Show credential data schema",
+      "description": "Show credential data schema",
+      "method": "get",
+      "endpoint": "/credentials/schema/{credentialTypeName}",
+      "tags": [
+        "Credential"
+      ],
+      "params": [
+        {
+          "name": "credentialTypeName",
+          "location": "path",
+          "required": true,
+          "description": "The credential type name that you want to get the schema for",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getExecutions": {
+      "displayName": "Retrieve all executions",
+      "description": "Retrieve all executions from your instance",
+      "method": "get",
+      "endpoint": "/executions",
+      "tags": [
+        "Execution"
+      ],
+      "params": [
+        {
+          "name": "includeData",
+          "location": "query",
+          "required": false,
+          "description": "Whether or not to include the execution's detailed data",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "status",
+          "location": "query",
+          "required": false,
+          "description": "Status to filter the executions by",
+          "type": "options",
+          "default": "error",
+          "options": [
+            "error",
+            "success",
+            "waiting"
+          ]
+        },
+        {
+          "name": "workflowId",
+          "location": "query",
+          "required": false,
+          "description": "Workflow to filter the executions by",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getExecutionsId": {
+      "displayName": "Retrieve an execution",
+      "description": "Retrieve an execution from your instance",
+      "method": "get",
+      "endpoint": "/executions/{id}",
+      "tags": [
+        "Execution"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the execution",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "includeData",
+          "location": "query",
+          "required": false,
+          "description": "Whether or not to include the execution's detailed data",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "deleteExecutionsId": {
+      "displayName": "Delete an execution",
+      "description": "Deletes an execution from your instance",
+      "method": "delete",
+      "endpoint": "/executions/{id}",
+      "tags": [
+        "Execution"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the execution",
+          "type": "number",
+          "default": 0
+        }
+      ]
+    },
+    "postTags": {
+      "displayName": "Create a tag",
+      "description": "Create a tag in your instance",
+      "method": "post",
+      "endpoint": "/tags",
+      "tags": [
+        "Tag"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2tUt1wbLX592XDdX"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Production"
+        },
+        {
+          "name": "createdAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "updatedAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getTags": {
+      "displayName": "Retrieve all tags",
+      "description": "Retrieve all tags from your instance",
+      "method": "get",
+      "endpoint": "/tags",
+      "tags": [
+        "Tag"
+      ],
+      "params": [
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getTagsId": {
+      "displayName": "Retrieves a tag",
+      "description": "Retrieves a tag",
+      "method": "get",
+      "endpoint": "/tags/{id}",
+      "tags": [
+        "Tag"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the tag",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteTagsId": {
+      "displayName": "Delete a tag",
+      "description": "Deletes a tag",
+      "method": "delete",
+      "endpoint": "/tags/{id}",
+      "tags": [
+        "Tag"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the tag",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putTagsId": {
+      "displayName": "Update a tag",
+      "description": "Update a tag",
+      "method": "put",
+      "endpoint": "/tags/{id}",
+      "tags": [
+        "Tag"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the tag",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2tUt1wbLX592XDdX"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Production"
+        },
+        {
+          "name": "createdAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "updatedAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postWorkflows": {
+      "displayName": "Create a workflow",
+      "description": "Create a workflow in your instance",
+      "method": "post",
+      "endpoint": "/workflows",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2tUt1wbLX592XDdX"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Workflow 1"
+        },
+        {
+          "name": "active",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "createdAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "updatedAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "nodes",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "connections",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "settings",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "staticData",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. {\"lastId\":1}"
+        },
+        {
+          "name": "tags",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "getWorkflows": {
+      "displayName": "Retrieve all workflows",
+      "description": "Retrieve all workflows from your instance",
+      "method": "get",
+      "endpoint": "/workflows",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "active",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "tags",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "name",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "excludePinnedData",
+          "location": "query",
+          "required": false,
+          "description": "Set this to avoid retrieving pinned data",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getWorkflowsId": {
+      "displayName": "Retrieves a workflow",
+      "description": "Retrieves a workflow",
+      "method": "get",
+      "endpoint": "/workflows/{id}",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "excludePinnedData",
+          "location": "query",
+          "required": false,
+          "description": "Set this to avoid retrieving pinned data",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteWorkflowsId": {
+      "displayName": "Delete a workflow",
+      "description": "Deletes a workflow",
+      "method": "delete",
+      "endpoint": "/workflows/{id}",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putWorkflowsId": {
+      "displayName": "Update a workflow",
+      "description": "Update a workflow",
+      "method": "put",
+      "endpoint": "/workflows/{id}",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. 2tUt1wbLX592XDdX"
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. Workflow 1"
+        },
+        {
+          "name": "active",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "createdAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "updatedAt",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "nodes",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "connections",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "settings",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        },
+        {
+          "name": "staticData",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. {\"lastId\":1}"
+        },
+        {
+          "name": "tags",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "postWorkflowsIdActivate": {
+      "displayName": "Activate a workflow",
+      "description": "Active a workflow",
+      "method": "post",
+      "endpoint": "/workflows/{id}/activate",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postWorkflowsIdDeactivate": {
+      "displayName": "Deactivate a workflow",
+      "description": "Deactivate a workflow",
+      "method": "post",
+      "endpoint": "/workflows/{id}/deactivate",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putWorkflowsIdTransfer": {
+      "displayName": "Transfer a workflow to another project",
+      "description": "Transfer a workflow to another project",
+      "method": "put",
+      "endpoint": "/workflows/{id}/transfer",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "destinationProjectId",
+          "location": "body",
+          "required": true,
+          "description": "The ID of the project to transfer the workflow to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putCredentialsIdTransfer": {
+      "displayName": "Transfer a credential to another project",
+      "description": "Transfer a credential to another project",
+      "method": "put",
+      "endpoint": "/credentials/{id}/transfer",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the credential",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "destinationProjectId",
+          "location": "body",
+          "required": true,
+          "description": "The ID of the project to transfer the credential to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getWorkflowsIdTags": {
+      "displayName": "Get workflow tags",
+      "description": "Get workflow tags",
+      "method": "get",
+      "endpoint": "/workflows/{id}/tags",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putWorkflowsIdTags": {
+      "displayName": "Update tags of a workflow",
+      "description": "Update tags of a workflow",
+      "method": "put",
+      "endpoint": "/workflows/{id}/tags",
+      "tags": [
+        "Workflow"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the workflow",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getUsers": {
+      "displayName": "Retrieve all users",
+      "description": "Retrieve all users from your instance. Only available for the instance owner",
+      "method": "get",
+      "endpoint": "/users",
+      "tags": [
+        "User"
+      ],
+      "params": [
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "includeRole",
+          "location": "query",
+          "required": false,
+          "description": "Whether to include the user's role or not",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "projectId",
+          "location": "query",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postUsers": {
+      "displayName": "Create multiple users",
+      "description": "Create one or more users",
+      "method": "post",
+      "endpoint": "/users",
+      "tags": [
+        "User"
+      ],
+      "params": []
+    },
+    "getUsersId": {
+      "displayName": "Get user by ID/Email",
+      "description": "Retrieve a user from your instance. Only available for the instance owner",
+      "method": "get",
+      "endpoint": "/users/{id}",
+      "tags": [
+        "User"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID or email of the user",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "includeRole",
+          "location": "query",
+          "required": false,
+          "description": "Whether to include the user's role or not",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "deleteUsersId": {
+      "displayName": "Delete a user",
+      "description": "Delete a user from your instance",
+      "method": "delete",
+      "endpoint": "/users/{id}",
+      "tags": [
+        "User"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID or email of the user",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "patchUsersIdRole": {
+      "displayName": "Change a user's global role",
+      "description": "Change a user's global role",
+      "method": "patch",
+      "endpoint": "/users/{id}/role",
+      "tags": [
+        "User"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID or email of the user",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "newRoleName",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postSourceControlPull": {
+      "displayName": "Pull changes from the remote repository",
+      "description": "Requires the Source Control feature to be licensed and connected to a repository",
+      "method": "post",
+      "endpoint": "/source-control/pull",
+      "tags": [
+        "SourceControl"
+      ],
+      "params": [
+        {
+          "name": "force",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "variables",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "json",
+          "default": "{}"
+        }
+      ]
+    },
+    "postVariables": {
+      "displayName": "Create a variable",
+      "description": "Create a variable in your instance",
+      "method": "post",
+      "endpoint": "/variables",
+      "tags": [
+        "Variable"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "key",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "value",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": "",
+          "placeholder": "e.g. test"
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getVariables": {
+      "displayName": "Retrieve variables",
+      "description": "Retrieve variables from your instance",
+      "method": "get",
+      "endpoint": "/variables",
+      "tags": [
+        "Variable"
+      ],
+      "params": [
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteVariablesId": {
+      "displayName": "Delete a variable",
+      "description": "Delete a variable from your instance",
+      "method": "delete",
+      "endpoint": "/variables/{id}",
+      "tags": [
+        "Variable"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the variable",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "postProjects": {
+      "displayName": "Create a project",
+      "description": "Create a project in your instance",
+      "method": "post",
+      "endpoint": "/projects",
+      "tags": [
+        "Project"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "getProjects": {
+      "displayName": "Retrieve projects",
+      "description": "Retrieve projects from your instance",
+      "method": "get",
+      "endpoint": "/projects",
+      "tags": [
+        "Project"
+      ],
+      "params": [
+        {
+          "name": "limit",
+          "location": "query",
+          "required": false,
+          "description": "The maximum number of items to return",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "name": "cursor",
+          "location": "query",
+          "required": false,
+          "description": "Paginate by setting the cursor parameter to the nextCursor attribute returned by the previous request's response. Defaul...",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "deleteProjectsProjectid": {
+      "displayName": "Delete a project",
+      "description": "Delete a project from your instance",
+      "method": "delete",
+      "endpoint": "/projects/{projectId}",
+      "tags": [
+        "Project"
+      ],
+      "params": [
+        {
+          "name": "projectId",
+          "location": "path",
+          "required": true,
+          "description": "The ID of the project",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "putProjectsProjectid": {
+      "displayName": "Update a project",
+      "description": "Update a project",
+      "method": "put",
+      "endpoint": "/projects/{projectId}",
+      "tags": [
+        "Project"
+      ],
+      "params": [
+        {
+          "name": "id",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "name",
+          "location": "body",
+          "required": true,
+          "description": "",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "type",
+          "location": "body",
+          "required": false,
+          "description": "",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    }
+  }
+}
