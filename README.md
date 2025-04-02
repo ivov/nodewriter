@@ -73,8 +73,7 @@ bun src/cli.ts path/to/openapi-spec.json
 
 The `sample-outputs` dir holds snapshots of valid outputs. Before committing, a git hook will regenerate all snapshots and check if anything has changed. If the changes are intended, then stage those changes as well. If any changes are unintended, then the commit contains a bug to fix.
 
-> [!NOTE] Why not traditional snapshot testing?  
-> This flow makes diffs in multiple large files easy to inspect, preserves syntax highlighting, and separates outputs by file. `toMatchSnapshot` reports changes via CLI, which is unwiedly for diffs in multiple large files.
+Why not traditional snapshot testing? This flow makes diffs in multiple large files easy to inspect, preserves syntax highlighting, and separates outputs by file. `toMatchSnapshot` reports changes via CLI, which is unwiedly for diffs in multiple large files.
 
 ### Performance
 
