@@ -1,2 +1,2 @@
-sample-inputs/* linguist-vendored
-sample-outputs/* linguist-vendored
+/sample-inputs/** linguist-vendored=true
+/sample-outputs/** linguist-vendored=true
