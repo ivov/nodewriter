@@ -737,3 +737,14 @@ export type PossiblyRefNode = {
 	$ref?: string;
 	[key: string]: unknown;
 };
+
+export type GeneratorOutput = {
+	nodeType: {
+		fileName: string;
+		source: string;
+	};
+	credTypes: {
+		fileName: string;
+		source: string;
+	}[];
+};

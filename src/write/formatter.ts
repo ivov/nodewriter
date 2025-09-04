@@ -4,7 +4,7 @@ import { FORMATTER_OPTIONS } from "~/constants";
 export class Formatter {
 	private biome: Biome | null = null;
 
-	async format(source: string, ext: "js" | "json") {
+	async format(source: string, ext: "js" | "json" | "ts") {
 		return (await this.getBiome())
 			.formatContent(source, { filePath: `file.${ext}` })
 			.content.split("\n")

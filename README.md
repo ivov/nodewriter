@@ -35,11 +35,16 @@ Options:
 - `--skip-formatting` to skip formatting for output files - default: `false`
 - `--output-dir <dir>` to set output dir - default: `./nodewriter-output`
 - `--experimental-json` to output JSON instead of JS - default: `false`
+- `--community-node-repo` to generate repository from OpenAPI spec and [n8n-nodes-starter](https://github.com/n8n-io/n8n-nodes-starter)
 
-Example:
+Examples:
 
 ```sh
 nodewriter my-specs/fff.json --service-name FridaysForFuture
+```
+
+```sh
+nodewriter my-specs/fff.json --service-name FridaysForFuture --community-node-repo n8n-nodes-fridays-for-future
 ```
 
 Requirements:

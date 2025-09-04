@@ -4,8 +4,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { SpecParser } from "~/parse/spec-parser";
 import { JsGenerator } from "~/write/js-generator";
-import { CLI_HELP_MSG } from "~/constants";
+import {
+	CLI_HELP_MSG,
+	CLI_POST_COMMUNITY_REPO_GENERATION_MSG,
+} from "~/constants";
 import { JsonGenerator } from "./write/json-generator";
+import { generateCommunityRepository } from "./write/js/js-output-community-repo";
 
 async function main() {
 	const args = process.argv.slice(2);
@@ -20,7 +24,9 @@ async function main() {
 	const customServiceName = getOption(args, "--service-name");
 	const pretty = getOption(args, "--skip-formatting") ? false : true;
 	const outputDir = getOption(args, "--output-dir") || "./nodewriter-output";
-	const experimentalJson = getOption(args, "--experimental-json");
+	const communityNodeRepo = getOption(args, "--community-node-repo");
+	const experimentalJson =
+		getOption(args, "--experimental-json") || communityNodeRepo;
 
 	try {
 		await fs.mkdir(outputDir, { recursive: true });
@@ -37,6 +43,12 @@ async function main() {
 			extract,
 			customServiceName ?? extract.descriptors.nodeTypeClassName,
 		);
+
+		if (communityNodeRepo) {
+			await generateCommunityRepository(result, outputDir, communityNodeRepo);
+			console.log(CLI_POST_COMMUNITY_REPO_GENERATION_MSG);
+			return;
+		}
 
 		const nodeTypePath = path.join(outputDir, result.nodeType.fileName);
 		await fs.writeFile(nodeTypePath, result.nodeType.source);
